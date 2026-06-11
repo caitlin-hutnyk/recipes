@@ -113,6 +113,18 @@ main { max-width: var(--maxw); margin: 0 auto; padding: 26px 20px 72px; }
 }
 .meta-bit { color: var(--muted); font-size: 13px; }
 .empty { color: var(--muted); }
+.tag-untested { background: #fff4e5; color: #8a5a00; }
+
+/* list section headings (Staples / Untested) */
+.list-heading {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-weight: 800;
+  margin: 30px 0 12px;
+}
+.list-heading:first-child { margin-top: 0; }
 
 /* detail view */
 .back {

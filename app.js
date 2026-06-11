@@ -101,7 +101,8 @@ function recipeMatchesQuery(recipe, query) {
 }
 
 function renderList(query) {
-  var cards = "";
+  var stapleCards = "";
+  var untestedCards = "";
   for (var r = 0; r < RECIPES.length; r++) {
     var recipe = RECIPES[r];
     if (!recipeMatchesQuery(recipe, query)) continue;
@@ -110,7 +111,7 @@ function renderList(query) {
     for (var t = 0; t < recipe.tags.length; t++) {
       tagsHtml += '<span class="tag">' + recipe.tags[t] + "</span>";
     }
-    cards +=
+    var card =
       '<a class="card hue-' + (r % 6) + '" href="#/recipe/' + recipe.id + '">' +
       '<span class="card-emoji">' + (recipe.emoji || "🍽️") + "</span>" +
       "<h2>" + recipe.title + "</h2>" +
@@ -118,12 +119,25 @@ function renderList(query) {
       '<span class="meta-bit">Serves ' + recipe.servings + "</span>" +
       '<span class="meta-bit">' + recipe.time + "</span>" +
       "</div></a>";
+    if (recipe.untested) untestedCards += card;
+    else stapleCards += card;
   }
 
-  if (cards === "") {
-    cards = '<p class="empty">No recipes match “' + query + "”.</p>";
+  if (stapleCards === "" && untestedCards === "") {
+    appEl.innerHTML = '<p class="empty">No recipes match “' + query + "”.</p>";
+    return;
   }
-  appEl.innerHTML = '<div class="grid">' + cards + "</div>";
+
+  var html = "";
+  if (stapleCards !== "") {
+    /* only label the staples when an untested section follows */
+    if (untestedCards !== "") html += '<h3 class="list-heading">Staples</h3>';
+    html += '<div class="grid">' + stapleCards + "</div>";
+  }
+  if (untestedCards !== "") {
+    html += '<h3 class="list-heading">🧪 Untested — not cooked yet</h3><div class="grid">' + untestedCards + "</div>";
+  }
+  appEl.innerHTML = html;
 }
 
 /* ---- detail view ---- */
@@ -147,6 +161,9 @@ function renderDetail(recipe) {
   var tagsHtml = "";
   for (var t = 0; t < recipe.tags.length; t++) {
     tagsHtml += '<span class="tag">' + recipe.tags[t] + "</span>";
+  }
+  if (recipe.untested) {
+    tagsHtml += '<span class="tag tag-untested">🧪 Untested</span>';
   }
 
   var warningHtml = recipe.warning ? '<div class="warning">⚠️ ' + recipe.warning + "</div>" : "";

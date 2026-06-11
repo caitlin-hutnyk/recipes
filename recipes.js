@@ -6,6 +6,8 @@
  *   title     display name
  *   emoji     one emoji for the card + title (falls back to 🍽️)
  *   tags      array of small labels (e.g. "Gluten-free")
+ *   untested  true → listed under "Untested" on the home page and chipped
+ *             on its own page; delete the flag once it's cooked and approved
  *   warning   optional banner shown at the top (e.g. a GF caveat)
  *   time      rough total time, shown on the card
  *   servings  how many people the quantities below feed
@@ -375,6 +377,60 @@ var RECIPES = [
       "The cornstarch in the sauce is the thickener — mix it in while the sauce is still cold or it clumps.",
       "Velveting (the cornstarch + baking soda rest) is what makes the beef takeout-tender — don't skip the 15–20 min.",
       "Beef amount (450g) and veg counts are sensible defaults — the sauce and velveting ratios are the exact part."
+    ]
+  },
+
+  {
+    id: "chicken-teriyaki-bowl",
+    title: "Chicken Teriyaki & Broccoli Bowl",
+    emoji: "🍗",
+    tags: ["Gluten-free"],
+    untested: true,
+    time: "~30 min",
+    servings: 3,
+    scaleKey: { name: "chicken", label: "g", baseQty: 600 },
+    groups: [
+      {
+        name: "Chicken",
+        items: [
+          { qty: 600, unit: "g", name: "boneless chicken thighs", note: "4–5 thighs; skin-on = richer, breast = leaner" },
+          { qty: 1, unit: "tbsp", name: "neutral oil" }
+        ]
+      },
+      {
+        name: "Teriyaki glaze — 2 : 2 : 2 : 1",
+        items: [
+          { qty: 3, unit: "tbsp", name: "tamari (GF soy)" },
+          { qty: 3, unit: "tbsp", name: "sake", note: "rice-based, GF — or sub extra mirin + splash of water" },
+          { qty: 3, unit: "tbsp", name: "mirin" },
+          { qty: 1.5, unit: "tbsp", name: "white sugar" }
+        ]
+      },
+      {
+        name: "Bowl",
+        items: [
+          { qty: 500, unit: "g", name: "broccoli florets", note: "1 large head; bagged or frozen (thawed) = zero knife work" },
+          { qty: 1, unit: "tbsp", name: "neutral oil" },
+          { qty: 1.2, unit: "cup", name: "short-grain or jasmine rice, uncooked", note: "½ cup per 250g of meat" },
+          { qty: null, unit: "", name: "sesame seeds" },
+          { qty: 2, unit: "", name: "green onions, sliced", note: "optional" }
+        ]
+      }
+    ],
+    method: [
+      "Start the rice in the rice cooker.",
+      "Stir the glaze ingredients together until the sugar dissolves. Don't cook it yet — it reduces in the pan at the end, and it's a glaze, never a marinade (the sugar would burn).",
+      "Even out the thighs: shallow slits every couple of cm across the thick parts, then press flat. Pat dry.",
+      "Heat oil in a nonstick pan over medium-high. Chicken smooth-side down 5 min, pressing with the spatula for a hard sear. Flip, drop to low, lid on, ~3 min until cooked through (74°C / 165°F).",
+      "Pour off or wipe out the excess fat. Add the glaze over medium heat — tilt the pan and spoon it over the chicken 2–3 min until syrupy and shiny. Chicken out to rest; reduce the sauce a touch more if it's thin.",
+      "Meanwhile, broccoli in a second pan: oil over medium-high, florets cut-side down 2–3 min until charred, splash of water, cover 2 min, pinch of salt.",
+      "Slice the chicken. Bowl: rice → broccoli → chicken → leftover pan glaze → sesame seeds + green onion."
+    ],
+    notes: [
+      "The glaze is the classic Japanese golden ratio — 2 : 2 : 2 : 1 (tamari : sake : mirin : sugar). It thickens by reduction alone; no cornstarch.",
+      "Store-bought teriyaki sauce is nearly always wheat — homemade is the only safe version. GF label-check: tamari, mirin.",
+      "Purist teriyaki is just the four ingredients; 1 tsp grated ginger in the glaze is a fine non-traditional add.",
+      "Meal prep: store chicken (glazed), broccoli, and rice separately, 3–4 days. The sauce alone keeps ~1 week — double it and keep it in a jar."
     ]
   }
 ];
