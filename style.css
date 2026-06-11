@@ -203,6 +203,44 @@ h1 {
   font-size: 14px;
 }
 
+/* menu recipes: tab bar + panels */
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.tab {
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  padding: 8px 15px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+.tab:hover { border-color: var(--hue); }
+.tab.active { background: var(--hue); border-color: var(--hue); color: #fff; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* timeline tab */
+.timeline-panel { max-width: 760px; }
+.timeline { list-style: none; margin: 0; padding: 0; }
+.timeline li {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.timeline li:last-child { border-bottom: none; }
+.timeline .when {
+  flex: none;
+  width: 112px;
+  font-weight: 800;
+  color: var(--hue);
+  font-size: 14px;
+}
+.timeline .what { flex: 1; }
+
 /* two-column cook layout: ingredients beside method */
 .cook {
   display: grid;
@@ -305,4 +343,6 @@ li.done .ing { text-decoration: line-through; color: var(--muted); }
   .method li { padding-left: 38px; margin-bottom: 14px; }
   .method li::before { width: 26px; height: 26px; line-height: 26px; font-size: 13px; top: 2px; }
   .notes { padding: 14px 16px; }
+  .tab { padding: 7px 12px; font-size: 13px; }
+  .timeline .when { width: 88px; font-size: 13px; }
 }

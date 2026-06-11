@@ -1,7 +1,11 @@
-/* Recipe rendering, hash routing, and scaling. */
+/* Recipe rendering, hash routing, scaling, and menu tabs. */
 
 var appEl = document.getElementById("app");
 var searchEl = document.getElementById("search");
+
+/* active tab index for menu (multi-dish) recipes; reset when the route changes */
+var activeTab = 0;
+var lastDetailId = null;
 
 var COMMON_FRACTIONS = [
   { value: 0, label: "" },
@@ -87,14 +91,28 @@ function setMultiplier(recipeId, value) {
 }
 
 /* ---- list view ---- */
+function groupListsOf(recipe) {
+  var lists = [];
+  if (recipe.groups) lists.push(recipe.groups);
+  if (recipe.dishes) {
+    for (var d = 0; d < recipe.dishes.length; d++) {
+      lists.push(recipe.dishes[d].groups);
+    }
+  }
+  return lists;
+}
+
 function recipeMatchesQuery(recipe, query) {
   if (!query) return true;
   var needle = query.toLowerCase();
   if (recipe.title.toLowerCase().indexOf(needle) !== -1) return true;
-  for (var g = 0; g < recipe.groups.length; g++) {
-    var items = recipe.groups[g].items;
-    for (var i = 0; i < items.length; i++) {
-      if (items[i].name.toLowerCase().indexOf(needle) !== -1) return true;
+  var lists = groupListsOf(recipe);
+  for (var l = 0; l < lists.length; l++) {
+    for (var g = 0; g < lists[l].length; g++) {
+      var items = lists[l][g].items;
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].name.toLowerCase().indexOf(needle) !== -1) return true;
+      }
     }
   }
   return false;
@@ -154,6 +172,84 @@ function renderIngredientItem(item, multiplier) {
     amountHtml + item.name + noteHtml + "</span></label></li>";
 }
 
+function renderGroupsHtml(groups, multiplier) {
+  var groupsHtml = "";
+  for (var g = 0; g < groups.length; g++) {
+    var group = groups[g];
+    /* fixed groups are per-bowl assembly amounts — they stay constant
+       while the prep batch scales */
+    var groupMultiplier = group.fixed ? 1 : multiplier;
+    var itemsHtml = "";
+    for (var i = 0; i < group.items.length; i++) {
+      itemsHtml += renderIngredientItem(group.items[i], groupMultiplier);
+    }
+    var heading = group.name ? "<h4>" + group.name + "</h4>" : "";
+    groupsHtml += '<div class="ing-group">' + heading + "<ul>" + itemsHtml + "</ul></div>";
+  }
+  return groupsHtml;
+}
+
+function renderNotesSection(notes) {
+  if (!notes || !notes.length) return "";
+  var noteItems = "";
+  for (var n = 0; n < notes.length; n++) {
+    noteItems += "<li>" + notes[n] + "</li>";
+  }
+  return '<section class="notes"><h3>Notes</h3><ul>' + noteItems + "</ul></section>";
+}
+
+/* ingredients + method side by side (stacks on mobile) for one dish */
+function renderCookSection(dish, multiplier) {
+  var methodHtml = "";
+  for (var m = 0; m < dish.method.length; m++) {
+    methodHtml += "<li>" + dish.method[m] + "</li>";
+  }
+  return '<div class="cook">' +
+    '<section class="ingredients"><h3>Ingredients</h3>' + renderGroupsHtml(dish.groups, multiplier) + "</section>" +
+    '<div class="method-col">' +
+    '<section class="method"><h3>Method</h3><ol>' + methodHtml + "</ol></section>" +
+    renderNotesSection(dish.notes) +
+    "</div></div>";
+}
+
+function renderTimelinePanel(recipe) {
+  var items = "";
+  for (var t = 0; t < recipe.timeline.length; t++) {
+    var step = recipe.timeline[t];
+    items += '<li><span class="when">' + step.when + '</span><span class="what">' + step.what + "</span></li>";
+  }
+  return '<section class="timeline-panel"><h3>The plan — work backward from sit-down (T)</h3>' +
+    '<ol class="timeline">' + items + "</ol></section>" +
+    renderNotesSection(recipe.notes);
+}
+
+/* tab bar + one panel per dish (and the timeline) for menu recipes */
+function renderMenuBody(recipe, multiplier) {
+  var labels = [];
+  if (recipe.timeline) labels.push("📋 Timeline");
+  for (var d = 0; d < recipe.dishes.length; d++) {
+    var dish = recipe.dishes[d];
+    labels.push((dish.emoji ? dish.emoji + " " : "") + dish.name);
+  }
+  if (activeTab >= labels.length) activeTab = 0;
+
+  var tabsHtml = "";
+  for (var i = 0; i < labels.length; i++) {
+    tabsHtml += '<button class="tab' + (i === activeTab ? " active" : "") + '" data-tab="' + i + '">' + labels[i] + "</button>";
+  }
+
+  var panels = [];
+  if (recipe.timeline) panels.push(renderTimelinePanel(recipe));
+  for (var d2 = 0; d2 < recipe.dishes.length; d2++) {
+    panels.push(renderCookSection(recipe.dishes[d2], multiplier));
+  }
+  var panelsHtml = "";
+  for (var p = 0; p < panels.length; p++) {
+    panelsHtml += '<div class="tab-panel' + (p === activeTab ? " active" : "") + '">' + panels[p] + "</div>";
+  }
+  return '<div class="tabs">' + tabsHtml + "</div>" + panelsHtml;
+}
+
 function renderDetail(recipe) {
   var multiplier = getMultiplier(recipe.id);
   var servingsDisplay = formatNumber(recipe.servings * multiplier);
@@ -180,32 +276,13 @@ function renderDetail(recipe) {
       "</div>";
   }
 
-  var groupsHtml = "";
-  for (var g = 0; g < recipe.groups.length; g++) {
-    var group = recipe.groups[g];
-    /* fixed groups are per-bowl assembly amounts — they stay constant
-       while the prep batch scales */
-    var groupMultiplier = group.fixed ? 1 : multiplier;
-    var itemsHtml = "";
-    for (var i = 0; i < group.items.length; i++) {
-      itemsHtml += renderIngredientItem(group.items[i], groupMultiplier);
-    }
-    var heading = group.name ? "<h4>" + group.name + "</h4>" : "";
-    groupsHtml += '<div class="ing-group">' + heading + "<ul>" + itemsHtml + "</ul></div>";
-  }
-
-  var methodHtml = "";
-  for (var m = 0; m < recipe.method.length; m++) {
-    methodHtml += "<li>" + recipe.method[m] + "</li>";
-  }
-
-  var notesHtml = "";
-  if (recipe.notes && recipe.notes.length) {
-    var noteItems = "";
-    for (var n = 0; n < recipe.notes.length; n++) {
-      noteItems += "<li>" + recipe.notes[n] + "</li>";
-    }
-    notesHtml = '<section class="notes"><h3>Notes</h3><ul>' + noteItems + "</ul></section>";
+  /* a plain recipe renders as one cook section (its own groups/method/notes);
+     a menu recipe renders as tabs */
+  var body;
+  if (recipe.dishes) {
+    body = renderMenuBody(recipe, multiplier);
+  } else {
+    body = renderCookSection(recipe, multiplier);
   }
 
   var hueClass = "hue-" + (RECIPES.indexOf(recipe) % 6);
@@ -226,17 +303,13 @@ function renderDetail(recipe) {
       '<div class="scaler-row"><span class="mult">×' + (Math.round(multiplier * 100) / 100) +
       '</span><button id="resetScale" class="reset">Reset</button></div>' +
     "</section>" +
-    '<div class="cook">' +
-    '<section class="ingredients"><h3>Ingredients</h3>' + groupsHtml + "</section>" +
-    '<div class="method-col">' +
-    '<section class="method"><h3>Method</h3><ol>' + methodHtml + "</ol></section>" +
-    notesHtml +
-    "</div></div></div>";
+    body +
+    "</div>";
 
-  wireScalerEvents(recipe, multiplier);
+  wireDetailEvents(recipe, multiplier);
 }
 
-function wireScalerEvents(recipe, multiplier) {
+function wireDetailEvents(recipe, multiplier) {
   function applyMultiplier(newMultiplier) {
     setMultiplier(recipe.id, newMultiplier);
     renderDetail(recipe);
@@ -268,6 +341,22 @@ function wireScalerEvents(recipe, multiplier) {
     applyMultiplier(1);
   });
 
+  /* tab switching toggles classes in place so ingredient ticks survive */
+  var tabButtons = appEl.querySelectorAll(".tab");
+  var tabPanels = appEl.querySelectorAll(".tab-panel");
+  for (var b = 0; b < tabButtons.length; b++) {
+    tabButtons[b].addEventListener("click", function (event) {
+      var index = parseInt(event.currentTarget.getAttribute("data-tab"), 10);
+      activeTab = index;
+      for (var i = 0; i < tabButtons.length; i++) {
+        if (i === index) tabButtons[i].classList.add("active");
+        else tabButtons[i].classList.remove("active");
+        if (i === index) tabPanels[i].classList.add("active");
+        else tabPanels[i].classList.remove("active");
+      }
+    });
+  }
+
   var ticks = appEl.querySelectorAll(".tick");
   for (var k = 0; k < ticks.length; k++) {
     ticks[k].addEventListener("change", function (event) {
@@ -288,12 +377,17 @@ function router() {
       if (RECIPES[i].id === id) match = RECIPES[i];
     }
     if (match) {
+      if (match.id !== lastDetailId) {
+        activeTab = 0;
+        lastDetailId = match.id;
+      }
       searchEl.style.display = "none";
       renderDetail(match);
       window.scrollTo(0, 0);
       return;
     }
   }
+  lastDetailId = null;
   searchEl.style.display = "";
   renderList(searchEl.value);
 }

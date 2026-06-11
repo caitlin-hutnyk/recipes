@@ -8,6 +8,12 @@
  *   tags      array of small labels (e.g. "Gluten-free")
  *   untested  true → listed under "Untested" on the home page and chipped
  *             on its own page; delete the flag once it's cooked and approved
+ *   dishes    (menu recipes only) array of sub-recipes rendered as tabs:
+ *             { name, emoji, groups, method, notes } — each shaped like a
+ *             plain recipe's groups/method/notes. One multiplier scales all.
+ *   timeline  (menu recipes only) array of { when, what } — the work-backward
+ *             plan from sit-down time, shown as the first tab. Menu-level
+ *             notes render under the timeline.
  *   warning   optional banner shown at the top (e.g. a GF caveat)
  *   time      rough total time, shown on the card
  *   servings  how many people the quantities below feed
@@ -431,6 +437,170 @@ var RECIPES = [
       "Store-bought teriyaki sauce is nearly always wheat — homemade is the only safe version. GF label-check: tamari, mirin.",
       "Purist teriyaki is just the four ingredients; 1 tsp grated ginger in the glaze is a fine non-traditional add.",
       "Meal prep: store chicken (glazed), broccoli, and rice separately, 3–4 days. The sauce alone keeps ~1 week — double it and keep it in a jar."
+    ]
+  },
+
+  {
+    id: "lamb-dinner-party",
+    title: "Lamb Dinner Party",
+    emoji: "🐑",
+    tags: ["Gluten-free", "Menu"],
+    untested: true,
+    time: "day before + ~2½ h",
+    servings: 4,
+    timeline: [
+      { when: "Day before", what: "Panna cotta into jars (~15 min active). Optional head start: stem + ribbon the kale, make the dressing, toast the nuts and pistachios." },
+      { when: "Morning", what: "Salt the lamb racks. Bake the gratin fully; cool it, foil on, leave at room temp (fridge if more than ~4 h out)." },
+      { when: "T–1:30", what: "Massage the kale with half the dressing, back into the fridge — it improves from here. Set the table." },
+      { when: "T–1:00", what: "Lamb out of the fridge to lose the chill. You are now ahead of schedule; act accordingly." },
+      { when: "T–0:45", what: "Oven to 200°C. Rub the racks with the garlic-rosemary oil." },
+      { when: "T–0:30", what: "Sear the racks, then into the oven with the thermometer. Gratin in alongside (foiled) to rewarm." },
+      { when: "T–0:10", what: "Lamb out at 52°C, resting under loose foil. Finish the salad: remaining dressing, parm, nuts, pomegranate." },
+      { when: "T — serve", what: "Carve the lamb at the table. Gratin out hot." },
+      { when: "Mains served", what: "Toss the strawberries with sugar + balsamic — they macerate while everyone eats." },
+      { when: "Dessert", what: "Top the jars: strawberries + their syrup, crushed pistachios, one mint leaf each." }
+    ],
+    dishes: [
+      {
+        name: "Panna cotta",
+        emoji: "🍮",
+        groups: [
+          {
+            name: "Panna cotta (5 small jars)",
+            items: [
+              { qty: 500, unit: "ml", name: "whipping cream (33–36%)" },
+              { qty: 250, unit: "ml", name: "whole milk" },
+              { qty: 70, unit: "g", name: "white sugar", note: "≈⅓ cup" },
+              { qty: 2.25, unit: "tsp", name: "powdered gelatin", note: "most of one 7g packet — soft set for jars; 2½ tsp if unmolding" },
+              { qty: 1, unit: "tbsp", name: "vanilla bean paste", note: "or 2 tsp extract — paste gives the fancy specks" },
+              { qty: null, unit: "", name: "fine salt", note: "a pinch" }
+            ]
+          },
+          {
+            name: "Topping",
+            items: [
+              { qty: 300, unit: "g", name: "strawberries, hulled + sliced" },
+              { qty: 2, unit: "tbsp", name: "white sugar" },
+              { qty: 2, unit: "tsp", name: "balsamic vinegar" },
+              { qty: 3, unit: "tbsp", name: "pistachios, toasted + crushed" },
+              { qty: null, unit: "", name: "mint leaves", note: "one tiny one per jar" }
+            ]
+          }
+        ],
+        method: [
+          "Pour the milk into a small bowl, sprinkle the gelatin evenly over it, and let it bloom 5–10 min until wrinkly and spongy.",
+          "Heat the cream, sugar, and salt in a pot until steaming with small bubbles at the edges — NOT boiling (a hard boil weakens gelatin). Take it off the heat and stir in the vanilla.",
+          "Whisk the bloomed gelatin-milk into the hot cream until completely dissolved — rub a drop between your fingers; if you feel grit, whisk more.",
+          "Pour into the jars. Cool ~20 min on the counter, then refrigerate at least 6 h, ideally overnight. Keeps 3 days.",
+          "30 min before dessert: toss the strawberries with the sugar and balsamic. Spoon over the jars with their syrup, then pistachios and a mint leaf."
+        ],
+        notes: [
+          "The set: ¾ tsp gelatin per 250ml of liquid = soft, wobbly, jar-perfect. More gelatin = bouncier; only go up if you ever want to unmold onto plates.",
+          "Naturally gluten-free, no substitutions needed."
+        ]
+      },
+      {
+        name: "Gratin",
+        emoji: "🥔",
+        groups: [
+          {
+            name: "Gratin dauphinoise (cream-only, no flour)",
+            items: [
+              { qty: 1000, unit: "g", name: "yukon gold potatoes", note: "don't rinse the slices — their starch thickens the cream" },
+              { qty: 300, unit: "ml", name: "whipping cream" },
+              { qty: 200, unit: "ml", name: "whole milk" },
+              { qty: 2, unit: "", name: "garlic cloves, smashed" },
+              { qty: 1.5, unit: "tsp", name: "fine salt" },
+              { qty: null, unit: "", name: "nutmeg", note: "a few gratings" },
+              { qty: 2, unit: "", name: "thyme sprigs", note: "optional" },
+              { qty: 100, unit: "g", name: "gruyère, grated", note: "optional but it's a party" },
+              { qty: null, unit: "", name: "butter", note: "for the dish" }
+            ]
+          }
+        ],
+        method: [
+          "Infuse: bring the cream, milk, garlic, salt, nutmeg, and thyme to a bare simmer. Off the heat, steep 10 min, then fish out the garlic and thyme.",
+          "Mandoline the potatoes ~3mm thick (guard or cut glove on). Do not rinse the slices.",
+          "Layer the potatoes in a buttered baking dish, pour the infused cream over, and press flat — the liquid should come about ¾ of the way up.",
+          "Foil on, bake at 175°C for 45 min. Foil off, scatter the gruyère, bake 25–30 min more until a knife slides in with zero resistance and the top is golden.",
+          "Rest 15 min before serving — or make it entirely in the morning and rewarm, foiled, at 160°C for 20–30 min."
+        ],
+        notes: [
+          "No flour anywhere — the unrinsed potato starch does the thickening, so it's naturally GF and silkier for it.",
+          "Tenderness check is the knife, not the clock — ovens and potatoes vary."
+        ]
+      },
+      {
+        name: "Kale salad",
+        emoji: "🥬",
+        groups: [
+          {
+            name: "Salad",
+            items: [
+              { qty: 2, unit: "", name: "bunches lacinato kale", note: "≈200g stemmed — lacinato/dinosaur, not curly" },
+              { qty: 30, unit: "g", name: "parmesan, shaved" },
+              { qty: 40, unit: "g", name: "almonds or pine nuts, toasted" },
+              { qty: 50, unit: "g", name: "pomegranate seeds", note: "or dried cranberries — the color pop" }
+            ]
+          },
+          {
+            name: "Lemon dressing",
+            items: [
+              { qty: 3, unit: "tbsp", name: "olive oil" },
+              { qty: 2, unit: "tbsp", name: "lemon juice" },
+              { qty: 1, unit: "tsp", name: "dijon mustard" },
+              { qty: 1, unit: "tsp", name: "honey" },
+              { qty: null, unit: "", name: "fine salt", note: "a good pinch" }
+            ]
+          }
+        ],
+        method: [
+          "Strip the kale off its stems and slice into thin ribbons.",
+          "Whisk the dressing.",
+          "Massage the kale with half the dressing and a pinch of salt for 1–2 min, until it darkens and goes silky — this is the step that makes kale salad good.",
+          "Rest at least 30 min, up to a day — kale is the one green that improves dressed.",
+          "Just before serving: the rest of the dressing, then parmesan, nuts, and pomegranate."
+        ],
+        notes: [
+          "The sharp lemon is doing a job here — it cuts the lamb and the cream. Keep the dressing aggressive.",
+          "Dressing ratio: 3 : 2 : 1 : 1 (oil : lemon : dijon : honey)."
+        ]
+      },
+      {
+        name: "Lamb",
+        emoji: "🐑",
+        groups: [
+          {
+            name: "Rack of lamb",
+            items: [
+              { qty: 2, unit: "", name: "frenched racks of lamb", note: "~8 ribs each → 4 chops per person" },
+              { qty: null, unit: "", name: "salt", note: "generously, up to a day ahead" },
+              { qty: 2, unit: "tbsp", name: "olive oil" },
+              { qty: 3, unit: "", name: "garlic cloves, grated" },
+              { qty: 1, unit: "tbsp", name: "rosemary, finely chopped" },
+              { qty: null, unit: "", name: "black pepper" }
+            ]
+          }
+        ],
+        method: [
+          "Salt the racks up to 24 h ahead (morning-of is fine) and refrigerate uncovered. Out of the fridge 1 h before cooking.",
+          "Oven to 200°C. Mix the oil, garlic, rosemary, and pepper; rub it over the racks.",
+          "Sear in an oven-safe pan over medium-high: fat-side down 3–4 min until deeply browned, plus a quick minute on the ends.",
+          "Fat-side up, into the oven 12–18 min. Pull at 52°C in the center — probe through the side of the rack to the middle of the eye.",
+          "Rest 10 min under loose foil — carryover brings it to ~57°C, rosy medium-rare edge to edge.",
+          "Slice between the bones into chops. Carve at the table; accept applause."
+        ],
+        notes: [
+          "The thermometer is the entire skill: 52°C pull + 10 min rest = medium-rare, every time, first time.",
+          "No breadcrumb crust — the garlic-rosemary oil is classic, simpler, and keeps it GF.",
+          "Doneness reference: pull 47–49°C for rare, 52°C for medium-rare, 57°C for medium."
+        ]
+      }
+    ],
+    notes: [
+      "The whole menu is naturally gluten-free: cream-only gratin, no crust on the lamb, panna cotta is inherently GF. Label-check: dijon and balsamic (almost always fine).",
+      "Only the lamb happens while guests are there — everything else is done before the doorbell. That's the design.",
+      "Kit check: instant-read thermometer (non-negotiable), mandoline + cut glove, 5–6 small jars (125–180ml)."
     ]
   }
 ];
