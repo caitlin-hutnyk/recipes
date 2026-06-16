@@ -185,7 +185,7 @@ var RECIPES = [
         name: "Spicy Kewpie sauce",
         items: [
           { qty: 4, unit: "tbsp", name: "Kewpie mayonnaise" },
-          { qty: 1, unit: "tbsp", name: "tamari (GF soy)" },
+          { qty: 1.5, unit: "tbsp", name: "tamari (GF soy)" },
           { qty: 1, unit: "tsp", name: "sriracha", note: "1–2 tsp — start at 1, adjust for heat" },
           { qty: 1, unit: "tsp", name: "rice vinegar" },
           { qty: 1, unit: "tsp", name: "sesame oil" }
