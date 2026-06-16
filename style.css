@@ -323,6 +323,62 @@ li.done .ing { text-decoration: line-through; color: var(--muted); }
 .notes li { margin-bottom: 8px; font-size: 14px; }
 .notes li:last-child { margin-bottom: 0; }
 
+/* per-item macros table */
+.nutrition {
+  margin-top: 26px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  box-shadow: 0 3px 16px rgba(58, 46, 42, 0.06);
+}
+.n-sub {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 600;
+  color: var(--muted);
+}
+.n-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.n-table th,
+.n-table td {
+  padding: 7px 8px;
+  text-align: right;
+  border-bottom: 1px dashed var(--line);
+  white-space: nowrap;
+}
+.n-table th:first-child,
+.n-table td:first-child {
+  text-align: left;
+  white-space: normal;
+  width: 100%;
+}
+.n-table thead th {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
+.n-table .n-item { color: var(--ink); }
+.n-total td {
+  font-weight: 800;
+  color: var(--hue);
+  border-top: 2px solid var(--hue-soft);
+  border-bottom: none;
+  padding-top: 10px;
+}
+.n-note {
+  margin: 12px 0 0;
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 @media (max-width: 880px) {
   .cook { grid-template-columns: 1fr; gap: 24px; }
 }

@@ -198,8 +198,50 @@ function renderNotesSection(notes) {
   return '<section class="notes"><h3>Notes</h3><ul>' + noteItems + "</ul></section>";
 }
 
+/* per-item macros table. Shows PER SERVING, which is scale-invariant:
+   non-fixed items divide across the base servings, fixed groups are already
+   per-bowl so they count as-is. Items without an `m` field are skipped, so a
+   dish with no macro data (e.g. the lamb menu) renders no table at all. */
+function renderNutritionSection(groups, multiplier, servings) {
+  var rows = "";
+  var total = [0, 0, 0, 0];
+  var hasAny = false;
+  for (var g = 0; g < groups.length; g++) {
+    var group = groups[g];
+    var perServing = group.fixed ? 1 : 1 / servings;
+    for (var i = 0; i < group.items.length; i++) {
+      var item = group.items[i];
+      if (!item.m) continue;
+      hasAny = true;
+      var cal = item.m[0] * perServing;
+      var p = item.m[1] * perServing;
+      var f = item.m[2] * perServing;
+      var c = item.m[3] * perServing;
+      total[0] += cal;
+      total[1] += p;
+      total[2] += f;
+      total[3] += c;
+      rows += '<tr><td class="n-item">' + item.name + "</td><td>" + Math.round(cal) +
+        "</td><td>" + formatNumber(p) + "</td><td>" + formatNumber(f) +
+        "</td><td>" + formatNumber(c) + "</td></tr>";
+    }
+  }
+  if (!hasAny) return "";
+  var batchServings = servings * multiplier;
+  var batchCal = Math.round(total[0] * batchServings);
+  return '<section class="nutrition"><h3>Nutrition <span class="n-sub">· per serving</span></h3>' +
+    '<table class="n-table"><thead><tr><th>Item</th><th>Cal</th><th>P</th><th>F</th><th>C</th></tr></thead>' +
+    "<tbody>" + rows + "</tbody>" +
+    '<tfoot><tr class="n-total"><td>Per serving</td><td>' + Math.round(total[0]) +
+    "</td><td>" + formatNumber(total[1]) + "</td><td>" + formatNumber(total[2]) +
+    "</td><td>" + formatNumber(total[3]) + "</td></tr></tfoot></table>" +
+    '<p class="n-note">P protein · F fat · C carbs, in grams. Per-serving values don’t change when you scale — the full batch (×' +
+    (Math.round(multiplier * 100) / 100) + ", " + formatNumber(batchServings) + " servings) is ~" + batchCal +
+    " cal. Estimates; “to taste” items assume typical amounts.</p></section>";
+}
+
 /* ingredients + method side by side (stacks on mobile) for one dish */
-function renderCookSection(dish, multiplier) {
+function renderCookSection(dish, multiplier, servings) {
   var methodHtml = "";
   for (var m = 0; m < dish.method.length; m++) {
     methodHtml += "<li>" + dish.method[m] + "</li>";
@@ -209,7 +251,8 @@ function renderCookSection(dish, multiplier) {
     '<div class="method-col">' +
     '<section class="method"><h3>Method</h3><ol>' + methodHtml + "</ol></section>" +
     renderNotesSection(dish.notes) +
-    "</div></div>";
+    "</div></div>" +
+    renderNutritionSection(dish.groups, multiplier, servings);
 }
 
 function renderTimelinePanel(recipe) {
@@ -241,7 +284,7 @@ function renderMenuBody(recipe, multiplier) {
   var panels = [];
   if (recipe.timeline) panels.push(renderTimelinePanel(recipe));
   for (var d2 = 0; d2 < recipe.dishes.length; d2++) {
-    panels.push(renderCookSection(recipe.dishes[d2], multiplier));
+    panels.push(renderCookSection(recipe.dishes[d2], multiplier, recipe.servings));
   }
   var panelsHtml = "";
   for (var p = 0; p < panels.length; p++) {
@@ -282,7 +325,7 @@ function renderDetail(recipe) {
   if (recipe.dishes) {
     body = renderMenuBody(recipe, multiplier);
   } else {
-    body = renderCookSection(recipe, multiplier);
+    body = renderCookSection(recipe, multiplier, recipe.servings);
   }
 
   var hueClass = "hue-" + (RECIPES.indexOf(recipe) % 6);

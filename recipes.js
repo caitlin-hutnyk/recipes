@@ -25,12 +25,15 @@
  *             name can be "" for a single unlabelled list.
  *             fixed: true → the group ignores scaling (use for per-bowl
  *             assembly amounts that stay the same however big the batch is).
- *   item      { qty, unit, name, note }
+ *   item      { qty, unit, name, note, m }
  *             - qty:  number, or null for "to taste" type items
  *             - unit: "g", "ml", "tbsp", "tsp", "cup", or "" for counts
  *             - note: optional, shown muted in parentheses
- *   method    array of step strings
- *   notes     array of note strings
+ *             - m:    [cal, protein_g, fat_g, carb_g] for the listed quantity.
+ *                     Drives the Nutrition table. Omit for water/salt/zero-cal
+ *                     items. null-qty "to taste" items use a sensible amount.
+ *                     The table shows PER SERVING (scale-invariant); fixed
+ *                     groups are already per-bowl, non-fixed are ÷ servings.
  *
  * Everything scales by one multiplier, so ratios stay correct.
  */
@@ -48,17 +51,17 @@ var RECIPES = [
       {
         name: "Miso butter",
         items: [
-          { qty: 60, unit: "g", name: "unsalted butter, softened" },
-          { qty: 2, unit: "tbsp", name: "white (shiro) miso paste" },
-          { qty: 1, unit: "tsp", name: "grated fresh ginger" },
-          { qty: 1, unit: "tsp", name: "lemon juice" }
+          { qty: 60, unit: "g", name: "unsalted butter, softened", m: [430, 0, 49, 0] },
+          { qty: 2, unit: "tbsp", name: "white (shiro) miso paste", m: [66, 4, 2, 8] },
+          { qty: 1, unit: "tsp", name: "grated fresh ginger", m: [2, 0, 0, 0] },
+          { qty: 1, unit: "tsp", name: "lemon juice", m: [1, 0, 0, 0] }
         ]
       },
       {
         name: "Rice & quinoa",
         items: [
-          { qty: 200, unit: "g", name: "short-grain or jasmine rice, rinsed" },
-          { qty: 90, unit: "g", name: "quinoa, rinsed well" },
+          { qty: 200, unit: "g", name: "short-grain or jasmine rice, rinsed", m: [720, 14, 1, 158] },
+          { qty: 90, unit: "g", name: "quinoa, rinsed well", m: [331, 13, 6, 57] },
           { qty: 600, unit: "ml", name: "water", note: "~500ml in a rice cooker" },
           { qty: 0.5, unit: "tsp", name: "fine salt" }
         ]
@@ -66,31 +69,31 @@ var RECIPES = [
       {
         name: "Ponzu glaze",
         items: [
-          { qty: 60, unit: "ml", name: "tamari (GF soy sauce)" },
-          { qty: 60, unit: "ml", name: "fresh lemon juice (or yuzu)" },
-          { qty: 2, unit: "tbsp", name: "mirin" },
-          { qty: 1, unit: "tbsp", name: "rice vinegar" },
-          { qty: 1, unit: "tbsp", name: "honey or maple syrup" },
-          { qty: 1, unit: "tsp", name: "grated fresh ginger" }
+          { qty: 60, unit: "ml", name: "tamari (GF soy sauce)", m: [55, 10, 0, 5] },
+          { qty: 60, unit: "ml", name: "fresh lemon juice (or yuzu)", m: [15, 0, 0, 5] },
+          { qty: 2, unit: "tbsp", name: "mirin", m: [86, 0, 0, 17] },
+          { qty: 1, unit: "tbsp", name: "rice vinegar", m: [3, 0, 0, 0] },
+          { qty: 1, unit: "tbsp", name: "honey or maple syrup", m: [64, 0, 0, 17] },
+          { qty: 1, unit: "tsp", name: "grated fresh ginger", m: [2, 0, 0, 0] }
         ]
       },
       {
         name: "Salmon",
         items: [
-          { qty: 4, unit: "", name: "salmon fillets, skin-on", note: "~170g each" },
-          { qty: 2, unit: "tbsp", name: "kewpie or regular mayonnaise" },
-          { qty: 1, unit: "tbsp", name: "white miso paste" },
-          { qty: 4, unit: "tbsp", name: "gluten-free furikake" },
-          { qty: 1, unit: "tbsp", name: "neutral oil (avocado or grapeseed)" }
+          { qty: 4, unit: "", name: "salmon fillets, skin-on", note: "~170g each", m: [1416, 136, 88, 0] },
+          { qty: 2, unit: "tbsp", name: "kewpie or regular mayonnaise", m: [180, 0, 20, 0] },
+          { qty: 1, unit: "tbsp", name: "white miso paste", m: [33, 2, 1, 4] },
+          { qty: 4, unit: "tbsp", name: "gluten-free furikake", m: [120, 5, 8, 5] },
+          { qty: 1, unit: "tbsp", name: "neutral oil (avocado or grapeseed)", m: [120, 0, 14, 0] }
         ]
       },
       {
         name: "Bok choy",
         items: [
-          { qty: 4, unit: "", name: "baby bok choy, halved lengthwise" },
-          { qty: 1, unit: "tbsp", name: "neutral oil" },
-          { qty: 2, unit: "", name: "garlic cloves, minced" },
-          { qty: 1, unit: "tbsp", name: "tamari" },
+          { qty: 4, unit: "", name: "baby bok choy, halved lengthwise", m: [52, 5, 0, 8] },
+          { qty: 1, unit: "tbsp", name: "neutral oil", m: [120, 0, 14, 0] },
+          { qty: 2, unit: "", name: "garlic cloves, minced", m: [8, 0, 0, 2] },
+          { qty: 1, unit: "tbsp", name: "tamari", m: [14, 2, 0, 1] },
           { qty: 1, unit: "tbsp", name: "water or stock" }
         ]
       }
@@ -108,7 +111,8 @@ var RECIPES = [
     notes: [
       "GF label-check shortlist: furikake, tamari, white miso, mirin.",
       "Miso butter and ponzu can be made up to a day ahead.",
-      "For meal prep: crust raw salmon up to 24 hrs ahead, or freeze for up to 1 month."
+      "For meal prep: crust raw salmon up to 24 hrs ahead, or freeze for up to 1 month.",
+      "Macros: the miso butter (60g butter) + the salmon's own fat are most of the ~51g fat/serving. Skip or halve the butter to cut ~55–110 cal/serving."
     ]
   },
 
@@ -124,27 +128,27 @@ var RECIPES = [
       {
         name: "Krapow",
         items: [
-          { qty: 4, unit: "", name: "garlic cloves" },
-          { qty: 4, unit: "", name: "chilies", note: "add to taste" },
-          { qty: 2, unit: "tbsp", name: "neutral oil" },
-          { qty: 340, unit: "g", name: "pork, minced", note: "≈1.5 cups" },
-          { qty: 2, unit: "tbsp", name: "gluten-free oyster sauce" },
-          { qty: 2, unit: "tbsp", name: "tamari (GF soy)" },
-          { qty: 0.5, unit: "tbsp", name: "fish sauce" },
-          { qty: 1, unit: "tbsp", name: "flavor seasoning", note: "MSG / GF seasoning powder — see notes" },
-          { qty: 1, unit: "tbsp", name: "white sugar" },
-          { qty: 1, unit: "cup", name: "holy basil leaves" }
+          { qty: 4, unit: "", name: "garlic cloves", m: [16, 0, 0, 4] },
+          { qty: 4, unit: "", name: "chilies", note: "add to taste", m: [8, 0, 0, 2] },
+          { qty: 2, unit: "tbsp", name: "neutral oil", m: [240, 0, 28, 0] },
+          { qty: 340, unit: "g", name: "pork, minced", note: "≈1.5 cups", m: [820, 58, 65, 0] },
+          { qty: 2, unit: "tbsp", name: "gluten-free oyster sauce", m: [50, 1, 0, 11] },
+          { qty: 2, unit: "tbsp", name: "tamari (GF soy)", m: [28, 5, 0, 3] },
+          { qty: 0.5, unit: "tbsp", name: "fish sauce", m: [5, 1, 0, 0] },
+          { qty: 1, unit: "tbsp", name: "flavor seasoning", note: "MSG / GF seasoning powder — see notes", m: [5, 0, 0, 1] },
+          { qty: 1, unit: "tbsp", name: "white sugar", m: [48, 0, 0, 12] },
+          { qty: 1, unit: "cup", name: "holy basil leaves", m: [5, 0, 0, 1] }
         ]
       },
       {
         name: "Sides",
         items: [
-          { qty: 0.68, unit: "cup", name: "jasmine rice, uncooked", note: "½ cup per 250g of meat" },
-          { qty: 2, unit: "", name: "eggs", note: "2–3, usually" },
-          { qty: 2, unit: "", name: "baby bok choy, halved lengthwise" },
-          { qty: 0.5, unit: "tbsp", name: "neutral oil" },
-          { qty: 1, unit: "", name: "garlic clove, minced" },
-          { qty: 0.5, unit: "tbsp", name: "tamari" },
+          { qty: 0.68, unit: "cup", name: "jasmine rice, uncooked", note: "½ cup per 250g of meat", m: [459, 9, 1, 101] },
+          { qty: 2, unit: "", name: "eggs", note: "2–3, usually", m: [144, 12, 10, 1] },
+          { qty: 2, unit: "", name: "baby bok choy, halved lengthwise", m: [26, 2, 0, 4] },
+          { qty: 0.5, unit: "tbsp", name: "neutral oil", m: [60, 0, 7, 0] },
+          { qty: 1, unit: "", name: "garlic clove, minced", m: [4, 0, 0, 1] },
+          { qty: 0.5, unit: "tbsp", name: "tamari", m: [7, 1, 0, 1] },
           { qty: 0.5, unit: "tbsp", name: "water or stock" }
         ]
       }
@@ -162,7 +166,8 @@ var RECIPES = [
     notes: [
       "Flavor seasoning = plain MSG or a GF seasoning/bouillon powder. Optional umami boost — and lots of bouillon powders hide wheat, so label-check.",
       "Holy basil (krapow) is traditional; Thai basil works as a substitute but is sweeter and more anise-like.",
-      "GF label-check shortlist: oyster sauce, fish sauce, seasoning powder."
+      "GF label-check shortlist: oyster sauce, fish sauce, seasoning powder.",
+      "Macros assume regular ground pork. Lean ground pork drops it ~100 cal/serving; the 2 tbsp oil is another ~120 cal/serving you can trim."
     ]
   },
 
@@ -178,45 +183,45 @@ var RECIPES = [
       {
         name: "Fish",
         items: [
-          { qty: 200, unit: "g", name: "ahi tuna, sushi-grade, cubed", note: "maybe 200g — scale to what you've got" }
+          { qty: 200, unit: "g", name: "ahi tuna, sushi-grade, cubed", note: "maybe 200g — scale to what you've got", m: [218, 48, 2, 0] }
         ]
       },
       {
         name: "Spicy Kewpie sauce",
         items: [
-          { qty: 4, unit: "tbsp", name: "Kewpie mayonnaise" },
-          { qty: 1.5, unit: "tbsp", name: "tamari (GF soy)" },
-          { qty: 1, unit: "tsp", name: "sriracha", note: "1–2 tsp — start at 1, adjust for heat" },
-          { qty: 1, unit: "tsp", name: "rice vinegar" },
-          { qty: 1, unit: "tsp", name: "sesame oil" }
+          { qty: 4, unit: "tbsp", name: "Kewpie mayonnaise", note: "the calorie heavyweight — see notes", m: [400, 0, 44, 0] },
+          { qty: 1.5, unit: "tbsp", name: "tamari (GF soy)", m: [22, 4, 0, 2] },
+          { qty: 1, unit: "tsp", name: "sriracha", note: "1–2 tsp — start at 1, adjust for heat", m: [5, 0, 0, 1] },
+          { qty: 1, unit: "tsp", name: "rice vinegar", m: [1, 0, 0, 0] },
+          { qty: 1, unit: "tsp", name: "sesame oil", m: [40, 0, 5, 0] }
         ]
       },
       {
         name: "Rice seasoning",
         items: [
-          { qty: 1, unit: "tbsp", name: "rice vinegar" },
-          { qty: 1.5, unit: "tsp", name: "sugar" },
+          { qty: 1, unit: "tbsp", name: "rice vinegar", m: [3, 0, 0, 0] },
+          { qty: 1.5, unit: "tsp", name: "sugar", m: [24, 0, 0, 6] },
           { qty: 0.25, unit: "tsp", name: "salt" }
         ]
       },
       {
         name: "Base",
         items: [
-          { qty: 0.5, unit: "cup", name: "sushi rice, uncooked", note: "⅓–½ cup" },
-          { qty: null, unit: "", name: "lettuce", note: "the other half of the bowl — or all lettuce, or all rice, idc" }
+          { qty: 0.5, unit: "cup", name: "sushi rice, uncooked", note: "⅓–½ cup", m: [325, 6, 1, 72] },
+          { qty: null, unit: "", name: "lettuce", note: "the other half of the bowl — or all lettuce, or all rice, idc", m: [10, 0, 0, 2] }
         ]
       },
       {
         name: "Toppings",
         items: [
-          { qty: 0.5, unit: "", name: "mango, cubed", note: "half-ish" },
-          { qty: 0.5, unit: "", name: "avocado" },
-          { qty: null, unit: "", name: "cucumber, sliced" },
-          { qty: null, unit: "", name: "corn" },
-          { qty: null, unit: "", name: "edamame, shelled" },
-          { qty: null, unit: "", name: "furikake", note: "a fuck ton" },
-          { qty: null, unit: "", name: "sesame seeds" },
-          { qty: null, unit: "", name: "seaweed flakes", note: "maybe more" }
+          { qty: 0.5, unit: "", name: "mango, cubed", note: "half-ish", m: [50, 1, 0, 13] },
+          { qty: 0.5, unit: "", name: "avocado", m: [120, 2, 11, 6] },
+          { qty: null, unit: "", name: "cucumber, sliced", m: [8, 0, 0, 2] },
+          { qty: null, unit: "", name: "corn", m: [30, 1, 0, 7] },
+          { qty: null, unit: "", name: "edamame, shelled", note: "~¼ cup", m: [50, 4, 2, 4] },
+          { qty: null, unit: "", name: "furikake", note: "a fuck ton (~2 tbsp counted)", m: [60, 2, 4, 3] },
+          { qty: null, unit: "", name: "sesame seeds", m: [30, 1, 3, 1] },
+          { qty: null, unit: "", name: "seaweed flakes", note: "maybe more", m: [5, 0, 0, 1] }
         ]
       }
     ],
@@ -228,7 +233,8 @@ var RECIPES = [
     ],
     notes: [
       "The rice seasoning is classic sushi-su (vinegar : sugar : salt) — the amount suits the ⅓–½ cup of uncooked rice here.",
-      "GF label-check shortlist: furikake, tamari, sriracha (most sriracha is fine, e.g. Huy Fong, but check)."
+      "GF label-check shortlist: furikake, tamari, sriracha (most sriracha is fine, e.g. Huy Fong, but check).",
+      "Macros: this builds to ~1,400 cal as written. The 4 tbsp Kewpie (~400 cal) is the lever — drop to 1.5–2 tbsp and rice to ⅓ cup to land ~1,000 with the protein basically intact."
     ]
   },
 
@@ -244,22 +250,22 @@ var RECIPES = [
       {
         name: "Pre-prep (makes 3 bowls)",
         items: [
-          { qty: 450, unit: "g", name: "lean ground beef", note: "1 packet / ~1 lb" },
-          { qty: 1, unit: "", name: "packet taco seasoning", note: "label-check for GF" },
-          { qty: 2, unit: "", name: "yams or sweet potatoes", note: "1–2, depending on size" }
+          { qty: 450, unit: "g", name: "lean ground beef", note: "1 packet / ~1 lb", m: [750, 90, 40, 0] },
+          { qty: 1, unit: "", name: "packet taco seasoning", note: "label-check for GF", m: [60, 2, 1, 12] },
+          { qty: 2, unit: "", name: "yams or sweet potatoes", note: "1–2, depending on size", m: [350, 6, 1, 80] }
         ]
       },
       {
         name: "Assemble — per bowl",
         fixed: true,
         items: [
-          { qty: null, unit: "", name: "lettuce", note: "a fuckton" },
-          { qty: null, unit: "", name: "tomatoes" },
-          { qty: 1, unit: "cup", name: "fat-free cottage cheese", note: "¾–1 cup" },
-          { qty: 0.5, unit: "", name: "avocado", note: "half or full" },
-          { qty: null, unit: "", name: "1/3 of the beef" },
-          { qty: null, unit: "", name: "1/3 of the potatoes" },
-          { qty: null, unit: "", name: "hot honey", note: "a good drizzle" }
+          { qty: null, unit: "", name: "lettuce", note: "a fuckton", m: [15, 1, 0, 3] },
+          { qty: null, unit: "", name: "tomatoes", m: [20, 1, 0, 4] },
+          { qty: 1, unit: "cup", name: "fat-free cottage cheese", note: "¾–1 cup", m: [160, 28, 0, 9] },
+          { qty: 0.5, unit: "", name: "avocado", note: "half or full", m: [120, 2, 11, 6] },
+          { qty: null, unit: "", name: "1/3 of the beef", note: "counted in the prep batch above" },
+          { qty: null, unit: "", name: "1/3 of the potatoes", note: "counted in the prep batch above" },
+          { qty: null, unit: "", name: "hot honey", note: "a good drizzle (~1 tbsp)", m: [60, 0, 0, 16] }
         ]
       }
     ],
@@ -271,7 +277,8 @@ var RECIPES = [
     ],
     notes: [
       "The “Assemble” amounts are per bowl and don't scale — the scaler adjusts the prep batch (beef + potatoes) only.",
-      "GF label-check shortlist: taco seasoning (a frequent gluten offender) and hot honey."
+      "GF label-check shortlist: taco seasoning (a frequent gluten offender) and hot honey.",
+      "Macros: best protein-per-calorie of the staples (~1:12) thanks to lean beef + FF cottage cheese. Full avo + 1% cottage + heavier honey push a real bowl to ~850–935."
     ]
   },
 
@@ -287,20 +294,20 @@ var RECIPES = [
       {
         name: "",
         items: [
-          { qty: 840, unit: "g", name: "extra lean ground turkey" },
-          { qty: 796, unit: "ml", name: "diced tomatoes", note: "1 large can" },
-          { qty: 398, unit: "ml", name: "black beans, drained and rinsed", note: "1 can" },
-          { qty: 0.75, unit: "", name: "bell pepper, diced" },
-          { qty: 2, unit: "", name: "yellow onions, diced" },
-          { qty: 4, unit: "", name: "garlic cloves, pressed", note: "4–5" },
-          { qty: 2, unit: "tbsp", name: "double-concentrate tomato paste" },
-          { qty: 3, unit: "", name: "chipotle peppers in adobo, seeded", note: "2–3, to heat tolerance" },
-          { qty: 2, unit: "tbsp", name: "adobo sauce", note: "from the chipotle can" },
-          { qty: null, unit: "", name: "frozen corn + frozen veggie mix", note: "a lot" },
-          { qty: 1.5, unit: "tbsp", name: "chili powder" },
-          { qty: 1, unit: "tsp", name: "cumin" },
-          { qty: 1, unit: "tsp", name: "smoked paprika" },
-          { qty: null, unit: "", name: "lime juice or apple cider vinegar", note: "a splash, at the end" }
+          { qty: 840, unit: "g", name: "extra lean ground turkey", m: [1008, 185, 25, 0] },
+          { qty: 796, unit: "ml", name: "diced tomatoes", note: "1 large can", m: [140, 7, 1, 32] },
+          { qty: 398, unit: "ml", name: "black beans, drained and rinsed", note: "1 can", m: [350, 21, 1, 62] },
+          { qty: 0.75, unit: "", name: "bell pepper, diced", m: [23, 1, 0, 5] },
+          { qty: 2, unit: "", name: "yellow onions, diced", m: [88, 2, 0, 20] },
+          { qty: 4, unit: "", name: "garlic cloves, pressed", note: "4–5", m: [16, 0, 0, 4] },
+          { qty: 2, unit: "tbsp", name: "double-concentrate tomato paste", m: [30, 2, 0, 7] },
+          { qty: 3, unit: "", name: "chipotle peppers in adobo, seeded", note: "2–3, to heat tolerance", m: [15, 0, 0, 3] },
+          { qty: 2, unit: "tbsp", name: "adobo sauce", note: "from the chipotle can", m: [20, 0, 0, 4] },
+          { qty: null, unit: "", name: "frozen corn + frozen veggie mix", note: "a lot (~2 cups counted)", m: [200, 6, 2, 40] },
+          { qty: 1.5, unit: "tbsp", name: "chili powder", m: [25, 1, 1, 4] },
+          { qty: 1, unit: "tsp", name: "cumin", m: [8, 0, 0, 1] },
+          { qty: 1, unit: "tsp", name: "smoked paprika", m: [6, 0, 0, 1] },
+          { qty: null, unit: "", name: "lime juice or apple cider vinegar", note: "a splash, at the end", m: [3, 0, 0, 1] }
         ]
       }
     ],
@@ -313,10 +320,11 @@ var RECIPES = [
       "Off the heat, finish with a splash of lime juice or ACV."
     ],
     notes: [
-      "1 serving = 1 cup. Full pot at ×1: ~2,394 cal, ~226 g protein, ~9 cups → roughly 266 cal / 25 g protein per cup.",
+      "1 serving = 1 cup. Full pot at ×1: ~1,930 cal, ~225 g protein, ~9 cups → roughly 215 cal / 25 g protein per cup (recomputed per-item; the older 266 estimate assumed a fattier turkey).",
       "No added salt — deliberate (the adobo and seasoning carry it).",
       "GF label-check shortlist: chipotles in adobo (some brands, e.g. La Costeña, thicken the sauce with wheat flour) and chili powder blends.",
-      "This is the Apr 12 batch — the chipotle version."
+      "This is the Apr 12 batch — the chipotle version.",
+      "Macros: leanest staple by protein-per-calorie (~1:9). You usually eat 2–2.5 cups, so a real bowl is ~430–540 cal / 50–63 g protein."
     ]
   },
 
@@ -332,40 +340,40 @@ var RECIPES = [
       {
         name: "Beef + velveting",
         items: [
-          { qty: 450, unit: "g", name: "beef, sliced thin against the grain", note: "~1 lb flank or sirloin" },
-          { qty: 1, unit: "tsp", name: "cornstarch" },
+          { qty: 450, unit: "g", name: "beef, sliced thin against the grain", note: "~1 lb flank or sirloin", m: [743, 95, 36, 0] },
+          { qty: 1, unit: "tsp", name: "cornstarch", m: [10, 0, 0, 2] },
           { qty: null, unit: "", name: "baking soda", note: "a pinch" },
-          { qty: 1, unit: "tbsp", name: "tamari (GF soy)" },
-          { qty: 1, unit: "tsp", name: "neutral oil" }
+          { qty: 1, unit: "tbsp", name: "tamari (GF soy)", m: [14, 2, 0, 1] },
+          { qty: 1, unit: "tsp", name: "neutral oil", m: [40, 0, 5, 0] }
         ]
       },
       {
         name: "Sauce",
         items: [
-          { qty: 0.25, unit: "cup", name: "tamari (GF soy)" },
-          { qty: 1, unit: "tbsp", name: "rice vinegar" },
-          { qty: 1, unit: "tbsp", name: "brown sugar" },
-          { qty: 1, unit: "tsp", name: "sesame oil" },
-          { qty: 1, unit: "tsp", name: "cornstarch", note: "mix into the sauce before it hits the pan" }
+          { qty: 0.25, unit: "cup", name: "tamari (GF soy)", m: [55, 10, 0, 5] },
+          { qty: 1, unit: "tbsp", name: "rice vinegar", m: [3, 0, 0, 0] },
+          { qty: 1, unit: "tbsp", name: "brown sugar", m: [52, 0, 0, 13] },
+          { qty: 1, unit: "tsp", name: "sesame oil", m: [40, 0, 5, 0] },
+          { qty: 1, unit: "tsp", name: "cornstarch", note: "mix into the sauce before it hits the pan", m: [10, 0, 0, 2] }
         ]
       },
       {
         name: "Stir fry",
         items: [
-          { qty: null, unit: "", name: "olive oil, for cooking" },
-          { qty: null, unit: "", name: "garlic", note: "fresh, or ~1 tsp garlic powder" },
-          { qty: null, unit: "", name: "ginger", note: "fresh, or ~½ tsp ground ginger" },
-          { qty: 1, unit: "", name: "onion, sliced" },
-          { qty: 1, unit: "", name: "broccoli crown, in florets" },
-          { qty: 1, unit: "", name: "bell pepper, sliced" },
-          { qty: 2, unit: "", name: "green onions, sliced", note: "2–3" }
+          { qty: null, unit: "", name: "olive oil, for cooking", note: "~1.5 tbsp", m: [180, 0, 21, 0] },
+          { qty: null, unit: "", name: "garlic", note: "fresh, or ~1 tsp garlic powder", m: [8, 0, 0, 2] },
+          { qty: null, unit: "", name: "ginger", note: "fresh, or ~½ tsp ground ginger", m: [5, 0, 0, 1] },
+          { qty: 1, unit: "", name: "onion, sliced", m: [44, 1, 0, 10] },
+          { qty: 1, unit: "", name: "broccoli crown, in florets", m: [102, 8, 1, 20] },
+          { qty: 1, unit: "", name: "bell pepper, sliced", m: [30, 1, 0, 7] },
+          { qty: 2, unit: "", name: "green onions, sliced", note: "2–3", m: [10, 0, 0, 2] }
         ]
       },
       {
         name: "To serve",
         items: [
-          { qty: 0.9, unit: "cup", name: "basmati rice, uncooked", note: "½ cup per 250g of meat" },
-          { qty: null, unit: "", name: "sesame seeds" }
+          { qty: 0.9, unit: "cup", name: "basmati rice, uncooked", note: "½ cup per 250g of meat", m: [600, 12, 1, 132] },
+          { qty: null, unit: "", name: "sesame seeds", m: [30, 1, 3, 1] }
         ]
       }
     ],
@@ -382,7 +390,8 @@ var RECIPES = [
     notes: [
       "The cornstarch in the sauce is the thickener — mix it in while the sauce is still cold or it clumps.",
       "Velveting (the cornstarch + baking soda rest) is what makes the beef takeout-tender — don't skip the 15–20 min.",
-      "Beef amount (450g) and veg counts are sensible defaults — the sauce and velveting ratios are the exact part."
+      "Beef amount (450g) and veg counts are sensible defaults — the sauce and velveting ratios are the exact part.",
+      "Macros: the ~1.5 tbsp cooking oil (~180 cal across the batch) and the rice are the biggest non-beef levers."
     ]
   },
 
@@ -399,27 +408,27 @@ var RECIPES = [
       {
         name: "Chicken",
         items: [
-          { qty: 600, unit: "g", name: "boneless chicken thighs", note: "4–5 thighs; skin-on = richer, breast = leaner" },
-          { qty: 1, unit: "tbsp", name: "neutral oil" }
+          { qty: 600, unit: "g", name: "boneless chicken thighs", note: "4–5 thighs; skin-on = richer, breast = leaner", m: [894, 102, 54, 0] },
+          { qty: 1, unit: "tbsp", name: "neutral oil", m: [120, 0, 14, 0] }
         ]
       },
       {
         name: "Teriyaki glaze — 2 : 2 : 2 : 1",
         items: [
-          { qty: 3, unit: "tbsp", name: "tamari (GF soy)" },
-          { qty: 3, unit: "tbsp", name: "sake", note: "rice-based, GF — or sub extra mirin + splash of water" },
-          { qty: 3, unit: "tbsp", name: "mirin" },
-          { qty: 1.5, unit: "tbsp", name: "white sugar" }
+          { qty: 3, unit: "tbsp", name: "tamari (GF soy)", m: [42, 8, 0, 4] },
+          { qty: 3, unit: "tbsp", name: "sake", note: "rice-based, GF — or sub extra mirin + splash of water", m: [60, 0, 0, 2] },
+          { qty: 3, unit: "tbsp", name: "mirin", m: [129, 0, 0, 26] },
+          { qty: 1.5, unit: "tbsp", name: "white sugar", m: [72, 0, 0, 18] }
         ]
       },
       {
         name: "Bowl",
         items: [
-          { qty: 500, unit: "g", name: "broccoli florets", note: "1 large head; bagged or frozen (thawed) = zero knife work" },
-          { qty: 1, unit: "tbsp", name: "neutral oil" },
-          { qty: 1.2, unit: "cup", name: "short-grain or jasmine rice, uncooked", note: "½ cup per 250g of meat" },
-          { qty: null, unit: "", name: "sesame seeds" },
-          { qty: 2, unit: "", name: "green onions, sliced", note: "optional" }
+          { qty: 500, unit: "g", name: "broccoli florets", note: "1 large head; bagged or frozen (thawed) = zero knife work", m: [170, 14, 2, 33] },
+          { qty: 1, unit: "tbsp", name: "neutral oil", m: [120, 0, 14, 0] },
+          { qty: 1.2, unit: "cup", name: "short-grain or jasmine rice, uncooked", note: "½ cup per 250g of meat", m: [800, 16, 1, 176] },
+          { qty: null, unit: "", name: "sesame seeds", m: [30, 1, 3, 1] },
+          { qty: 2, unit: "", name: "green onions, sliced", note: "optional", m: [10, 0, 0, 2] }
         ]
       }
     ],
@@ -436,7 +445,8 @@ var RECIPES = [
       "The glaze is the classic Japanese golden ratio — 2 : 2 : 2 : 1 (tamari : sake : mirin : sugar). It thickens by reduction alone; no cornstarch.",
       "Store-bought teriyaki sauce is nearly always wheat — homemade is the only safe version. GF label-check: tamari, mirin.",
       "Purist teriyaki is just the four ingredients; 1 tsp grated ginger in the glaze is a fine non-traditional add.",
-      "Meal prep: store chicken (glazed), broccoli, and rice separately, 3–4 days. The sauce alone keeps ~1 week — double it and keep it in a jar."
+      "Meal prep: store chicken (glazed), broccoli, and rice separately, 3–4 days. The sauce alone keeps ~1 week — double it and keep it in a jar.",
+      "Macros assume boneless skinless thighs. Swapping to breast cuts ~15–20g fat/serving; skin-on adds it back. Not all the glaze is consumed (some stays in the pan), so the real number runs a touch under."
     ]
   },
 
@@ -600,7 +610,8 @@ var RECIPES = [
     notes: [
       "The whole menu is naturally gluten-free: cream-only gratin, no crust on the lamb, panna cotta is inherently GF. Label-check: dijon and balsamic (almost always fine).",
       "Only the lamb happens while guests are there — everything else is done before the doorbell. That's the design.",
-      "Kit check: instant-read thermometer (non-negotiable), mandoline + cut glove, 5–6 small jars (125–180ml)."
+      "Kit check: instant-read thermometer (non-negotiable), mandoline + cut glove, 5–6 small jars (125–180ml).",
+      "Macros: not yet broken down — this is a dinner-party menu, not a tracked staple. Ask if you want per-dish numbers added."
     ]
   }
 ];
