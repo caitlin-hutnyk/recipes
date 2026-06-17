@@ -187,13 +187,22 @@ var RECIPES = [
         ]
       },
       {
-        name: "Spicy Kewpie sauce",
+        name: "Spicy Kewpie sauce (lean default)",
         items: [
-          { qty: 4, unit: "tbsp", name: "Kewpie mayonnaise", note: "the calorie heavyweight — see notes", m: [400, 0, 44, 0] },
-          { qty: 1.5, unit: "tbsp", name: "tamari (GF soy)", m: [22, 4, 0, 2] },
-          { qty: 1, unit: "tsp", name: "sriracha", note: "1–2 tsp — start at 1, adjust for heat", m: [5, 0, 0, 1] },
+          { qty: 1, unit: "tbsp", name: "Kewpie mayonnaise", note: "¼ of the original — bump it up for a richer bowl, ~100 cal/tbsp", m: [100, 0, 11, 0] },
+          { qty: 1, unit: "tsp", name: "tamari (GF soy)", m: [5, 1, 0, 0] },
+          { qty: null, unit: "", name: "sriracha", note: "a few drops, to taste", m: [2, 0, 0, 0] },
+          { qty: 0.25, unit: "tsp", name: "sesame oil", m: [10, 0, 1, 0] }
+        ]
+      },
+      {
+        name: "Shoyu sauce (no mayo — keeps it from drying out)",
+        items: [
+          { qty: 1, unit: "tbsp", name: "tamari (GF soy)", m: [10, 1, 0, 1] },
           { qty: 1, unit: "tsp", name: "rice vinegar", m: [1, 0, 0, 0] },
-          { qty: 1, unit: "tsp", name: "sesame oil", m: [40, 0, 5, 0] }
+          { qty: 0.5, unit: "tsp", name: "sesame oil", note: "the toasty poke-shop flavor — don't skip", m: [20, 0, 2, 0] },
+          { qty: 0.25, unit: "tsp", name: "honey or a pinch of sugar", note: "optional — rounds the salt", m: [5, 0, 0, 1] },
+          { qty: null, unit: "", name: "grated ginger or a few drops sriracha", note: "optional" }
         ]
       },
       {
@@ -207,7 +216,7 @@ var RECIPES = [
       {
         name: "Base",
         items: [
-          { qty: 0.5, unit: "cup", name: "sushi rice, uncooked", note: "⅓–½ cup", m: [325, 6, 1, 72] },
+          { qty: 0.33, unit: "cup", name: "sushi rice, uncooked", note: "⅓ cup default — up to ½ for a bigger bowl", m: [213, 4, 1, 48] },
           { qty: null, unit: "", name: "lettuce", note: "the other half of the bowl — or all lettuce, or all rice, idc", m: [10, 0, 0, 2] }
         ]
       },
@@ -217,8 +226,8 @@ var RECIPES = [
           { qty: 0.5, unit: "", name: "mango, cubed", note: "half-ish", m: [50, 1, 0, 13] },
           { qty: 0.5, unit: "", name: "avocado", m: [120, 2, 11, 6] },
           { qty: null, unit: "", name: "cucumber, sliced", m: [8, 0, 0, 2] },
-          { qty: null, unit: "", name: "corn", m: [30, 1, 0, 7] },
-          { qty: null, unit: "", name: "edamame, shelled", note: "~¼ cup", m: [50, 4, 2, 4] },
+          { qty: 0.33, unit: "cup", name: "corn", note: "⅓ cup", m: [45, 2, 1, 10] },
+          { qty: 0.33, unit: "cup", name: "edamame, shelled", note: "⅓ cup", m: [62, 6, 3, 5] },
           { qty: null, unit: "", name: "furikake", note: "a fuck ton (~2 tbsp counted)", m: [60, 2, 4, 3] },
           { qty: null, unit: "", name: "sesame seeds", m: [30, 1, 3, 1] },
           { qty: null, unit: "", name: "seaweed flakes", note: "maybe more", m: [5, 0, 0, 1] }
@@ -227,14 +236,14 @@ var RECIPES = [
     ],
     method: [
       "Cook the rice. While still warm, gently fold through the rice seasoning (stir the vinegar, sugar, and salt until dissolved first). Let cool slightly.",
-      "Whisk the sauce ingredients together in a bowl.",
-      "Cube the tuna and toss it in the sauce (or keep the sauce as a drizzle on top, your call).",
-      "Build the bowl: rice and/or lettuce base, then tuna, mango, avocado, cucumber, corn, and edamame. Finish with a fuck ton of furikake, sesame seeds, and more seaweed flakes if you're feeling it."
+      "Make the sauces: whisk the spicy Kewpie in one small bowl, the shoyu in another. The combo is the move — Kewpie for creamy spice, shoyu for brightness and to keep it from drying out — but either one solo works.",
+      "Cube the tuna and toss it in the Kewpie sauce (or keep it as a drizzle on top, your call).",
+      "Build the bowl: rice and/or lettuce base, then tuna, mango, avocado, cucumber, corn, and edamame. Drizzle the shoyu over the top, then finish with a fuck ton of furikake, sesame seeds, and more seaweed flakes if you're feeling it."
     ],
     notes: [
       "The rice seasoning is classic sushi-su (vinegar : sugar : salt) — the amount suits the ⅓–½ cup of uncooked rice here.",
       "GF label-check shortlist: furikake, tamari, sriracha (most sriracha is fine, e.g. Huy Fong, but check).",
-      "Macros: this builds to ~1,400 cal as written. The 4 tbsp Kewpie (~400 cal) is the lever — drop to 1.5–2 tbsp and rice to ⅓ cup to land ~1,000 with the protein basically intact."
+      "Macros: this lean build — 1 tbsp Kewpie + the shoyu drizzle, ⅓ cup rice — lands ~1,000 cal / ~68g protein (the table counts both sauces, since using both is the default). The Kewpie is the calorie lever: each extra tbsp is ~100 cal, so bump it for a richer, creamier bowl."
     ]
   },
 
