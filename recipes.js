@@ -405,6 +405,40 @@ var RECIPES = [
   },
 
   {
+    id: "raspberry-protein-chia-pudding",
+    title: "Raspberry Protein Chia Pudding",
+    emoji: "🍓",
+    tags: ["Gluten-free", "Meal prep"],
+    time: "~5 min + chill",
+    servings: 1,
+    groups: [
+      {
+        name: "",
+        items: [
+          { qty: 2, unit: "tbsp", name: "chia seeds", note: "24g", m: [120, 4, 8, 10] },
+          { qty: 0.5, unit: "cup", name: "fat-free milk (or milk of choice)", note: "120ml", m: [41, 4, 0, 6] },
+          { qty: 0.25, unit: "tsp", name: "vanilla", m: [3, 0, 0, 0] },
+          { qty: 0.5, unit: "tbsp", name: "maple syrup", note: "sugar-free, or sweetener of choice", m: [5, 0, 0, 1] },
+          { qty: 0.5, unit: "cup", name: "non-fat plain Greek yogurt", note: "113g", m: [67, 12, 0, 4] },
+          { qty: 0.5, unit: "cup", name: "frozen raspberries", note: "70g, or fresh", m: [36, 1, 0, 8] },
+          { qty: 0.5, unit: "", name: "scoop vanilla protein powder", note: "15g", m: [60, 13, 1, 1] }
+        ]
+      }
+    ],
+    method: [
+      "Add the chia seeds, milk, vanilla, and sweetener to a small jar with a lid and stir until combined. Let it sit 5 min so the chia starts to gel.",
+      "Stir again to break up any clumps, then add the yogurt, raspberries, and protein powder; stir until combined.",
+      "Cover and refrigerate overnight, or a minimum of 2 hours.",
+      "Eat as is, or top with more raspberries, peanut butter, granola — whatever you love."
+    ],
+    notes: [
+      "Per serving (makes 1): ~330 cal, 35g protein, 29g carb, 9g fat, 13g fiber.",
+      "13g fiber is high and great for satiety — pair it with water.",
+      "GF label-check: protein powder and any granola topping (the chia, yogurt, and berries are naturally GF)."
+    ]
+  },
+
+  {
     id: "chicken-teriyaki-bowl",
     title: "Chicken Teriyaki & Broccoli Bowl",
     emoji: "🍗",
