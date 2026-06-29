@@ -405,6 +405,50 @@ var RECIPES = [
   },
 
   {
+    id: "smashed-cucumber-salad",
+    title: "Smashed Asian Cucumber Salad",
+    emoji: "🥒",
+    tags: ["Gluten-free", "Side"],
+    time: "~10 min",
+    servings: 1,
+    scaleKey: { name: "cucumber", label: "cucumbers", baseQty: 0.5 },
+    groups: [
+      {
+        name: "Salad",
+        items: [
+          { qty: 0.5, unit: "", name: "English cucumber (seedless)", note: "~½ a big one, ≈150g", m: [22, 1, 0, 5] },
+          { qty: 1, unit: "", name: "garlic clove, finely chopped", note: "to taste", m: [4, 0, 0, 1] },
+          { qty: 0.5, unit: "tsp", name: "toasted sesame seeds", m: [9, 0, 1, 0] },
+          { qty: 1, unit: "tbsp", name: "cilantro, chopped", m: [1, 0, 0, 0] }
+        ]
+      },
+      {
+        name: "Dressing",
+        items: [
+          { qty: 0.25, unit: "tsp", name: "salt", m: [0, 0, 0, 0] },
+          { qty: 0.625, unit: "tsp", name: "sugar", m: [10, 0, 0, 2] },
+          { qty: 0.5, unit: "tsp", name: "sesame oil", m: [20, 0, 2, 0] },
+          { qty: 0.75, unit: "tsp", name: "tamari (GF soy)", m: [2, 0, 0, 0] },
+          { qty: 1.125, unit: "tsp", name: "rice vinegar", m: [1, 0, 0, 0] },
+          { qty: 0.5, unit: "tsp", name: "chili oil", note: "optional, to taste" }
+        ]
+      }
+    ],
+    method: [
+      "Make the dressing: stir the salt, sugar, sesame oil, tamari, and rice vinegar until the sugar and salt fully dissolve. Set aside.",
+      "Smash the cucumber: lay a large knife flat against it and press down with your hand until it cracks open, working along the whole length. It'll split into rough strips — then cut on a 45° angle into bite-size pieces.",
+      "Toss the cucumber with the dressing, garlic, and chili oil. Garnish with the sesame seeds and cilantro. Best eaten fresh."
+    ],
+    notes: [
+      "Smashing beats slicing — the craggy cracks grab far more dressing than clean-cut rounds.",
+      "Best fresh; smashed cucumber weeps as it sits. To prep ahead, salt the smashed pieces, rest 10 min, and drain before dressing — much less watery.",
+      "No chili oil? Heat 1 tbsp neutral oil until shimmering and drizzle it over — hot oil tastes different from raw in Chinese cooking. (The optional chili oil adds ~20 cal if you use it.)",
+      "GF: tamari stands in for the light soy; most chili oil is GF but label-check.",
+      "Adapted from The Woks of Life (Judy)."
+    ]
+  },
+
+  {
     id: "raspberry-protein-chia-pudding",
     title: "Raspberry Protein Chia Pudding",
     emoji: "🍓",
