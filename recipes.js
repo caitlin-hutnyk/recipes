@@ -41,78 +41,66 @@
 var RECIPES = [
   {
     id: "furikake-salmon",
-    title: "Furikake-Crusted Salmon with Ponzu Glaze & Miso Butter",
+    title: "Furikake-Crusted Salmon with Miso Butter",
     emoji: "🐟",
     tags: ["Gluten-free"],
-    time: "~35 min",
-    servings: 4,
-    scaleKey: { name: "salmon", label: "fillets", baseQty: 4 },
+    time: "~30 min",
+    servings: 3,
+    scaleKey: { name: "salmon", label: "fillets", baseQty: 3 },
     groups: [
-      {
-        name: "Miso butter",
-        items: [
-          { qty: 60, unit: "g", name: "unsalted butter, softened", m: [430, 0, 49, 0] },
-          { qty: 2, unit: "tbsp", name: "white (shiro) miso paste", m: [66, 4, 2, 8] },
-          { qty: 1, unit: "tsp", name: "grated fresh ginger", m: [2, 0, 0, 0] },
-          { qty: 1, unit: "tsp", name: "lemon juice", m: [1, 0, 0, 0] }
-        ]
-      },
-      {
-        name: "Rice & quinoa",
-        items: [
-          { qty: 200, unit: "g", name: "short-grain or jasmine rice, rinsed", m: [720, 14, 1, 158] },
-          { qty: 90, unit: "g", name: "quinoa, rinsed well", m: [331, 13, 6, 57] },
-          { qty: 600, unit: "ml", name: "water", note: "~500ml in a rice cooker" },
-          { qty: 0.5, unit: "tsp", name: "fine salt" }
-        ]
-      },
-      {
-        name: "Ponzu glaze",
-        items: [
-          { qty: 60, unit: "ml", name: "tamari (GF soy sauce)", m: [55, 10, 0, 5] },
-          { qty: 60, unit: "ml", name: "fresh lemon juice (or yuzu)", m: [15, 0, 0, 5] },
-          { qty: 2, unit: "tbsp", name: "mirin", m: [86, 0, 0, 17] },
-          { qty: 1, unit: "tbsp", name: "rice vinegar", m: [3, 0, 0, 0] },
-          { qty: 1, unit: "tbsp", name: "honey or maple syrup", m: [64, 0, 0, 17] },
-          { qty: 1, unit: "tsp", name: "grated fresh ginger", m: [2, 0, 0, 0] }
-        ]
-      },
       {
         name: "Salmon",
         items: [
-          { qty: 4, unit: "", name: "salmon fillets, skin-on", note: "~170g each", m: [1416, 136, 88, 0] },
-          { qty: 2, unit: "tbsp", name: "kewpie or regular mayonnaise", m: [180, 0, 20, 0] },
-          { qty: 1, unit: "tbsp", name: "white miso paste", m: [33, 2, 1, 4] },
-          { qty: 4, unit: "tbsp", name: "gluten-free furikake", m: [120, 5, 8, 5] },
-          { qty: 1, unit: "tbsp", name: "neutral oil (avocado or grapeseed)", m: [120, 0, 14, 0] }
+          { qty: 3, unit: "", name: "salmon fillets, skin-on", note: "~180g each", m: [1124, 108, 70, 0] },
+          { qty: 1, unit: "tbsp", name: "kewpie or regular mayonnaise", m: [90, 0, 10, 0] },
+          { qty: 2, unit: "tsp", name: "white miso paste", m: [22, 1, 1, 3] },
+          { qty: 3, unit: "tbsp", name: "gluten-free furikake", m: [90, 4, 6, 4] },
+          { qty: 2, unit: "tsp", name: "neutral oil (avocado or grapeseed)", note: "skin renders its own fat — go light", m: [80, 0, 9, 0] }
+        ]
+      },
+      {
+        name: "Quinoa",
+        items: [
+          { qty: 1, unit: "cup", name: "quinoa, raw", note: "~170g; rinse well, ~1¼ cups water in a rice cooker", m: [626, 24, 11, 108] },
+          { qty: 0.25, unit: "tsp", name: "fine salt" }
         ]
       },
       {
         name: "Bok choy",
         items: [
-          { qty: 4, unit: "", name: "baby bok choy, halved lengthwise", m: [52, 5, 0, 8] },
+          { qty: 750, unit: "g", name: "baby bok choy, halved lengthwise", note: "~250g/serving — a big pile; ~10 small heads each, or any green", m: [98, 11, 2, 17] },
           { qty: 1, unit: "tbsp", name: "neutral oil", m: [120, 0, 14, 0] },
-          { qty: 2, unit: "", name: "garlic cloves, minced", m: [8, 0, 0, 2] },
+          { qty: 3, unit: "", name: "garlic cloves, minced", m: [12, 0, 0, 3] },
           { qty: 1, unit: "tbsp", name: "tamari", m: [14, 2, 0, 1] },
           { qty: 1, unit: "tbsp", name: "water or stock" }
+        ]
+      },
+      {
+        name: "Miso butter",
+        items: [
+          { qty: 1.5, unit: "tbsp", name: "unsalted butter, softened", note: "~20g", m: [143, 0, 16, 0] },
+          { qty: 1, unit: "tbsp", name: "white (shiro) miso paste", m: [33, 2, 1, 4] },
+          { qty: 0.5, unit: "tsp", name: "grated fresh ginger", m: [1, 0, 0, 0] },
+          { qty: 0.5, unit: "tsp", name: "lemon juice", m: [0, 0, 0, 0] }
         ]
       }
     ],
     method: [
-      "Start the rice + quinoa in the rice cooker (28 min hands-off).",
-      "Mash softened butter with miso, ginger, and lemon juice. Set aside.",
-      "Whisk all ponzu ingredients in a small pot. Simmer until slightly syrupy (~4 min). Remove from heat.",
-      "Pat salmon dry. Mix mayo + miso into a paste, brush on top of fillets, press furikake firmly onto the coated side.",
-      "Heat oil in a pan over medium-high. Sear salmon skin-side down 4–5 min until crispy.",
-      "Flip salmon, cook 2–3 min more (internal 52°C / 125°F for medium). Transfer to a plate to rest.",
-      "In a second pan, sear halved bok choy cut-side down for 2–3 min until charred. Add garlic, tamari, splash of water. Cover 1 min.",
-      "Plate: rice → bok choy → salmon → drizzle ponzu → dollop miso butter on top."
+      "Rinse the quinoa well, then start it in the rice cooker (1 cup quinoa : ~1¼ cups water).",
+      "Make the miso butter: mash the softened butter with the miso, ginger, and lemon juice. Set aside.",
+      "Pat the salmon dry. Mix the mayo + miso into a paste (loosen with a few drops of water if needed), brush on top of the fillets, and press the furikake firmly onto the coated side.",
+      "Heat the oil in a pan over medium-high. Sear salmon skin-side down 4–5 min until crispy.",
+      "Flip, cook 2–3 min more (internal 52°C / 125°F for medium). Transfer to a plate to rest.",
+      "Second pan: sear the halved bok choy cut-side down 2–3 min until charred. Add the garlic, tamari, and a splash of water; cover 1 min.",
+      "Plate: quinoa → bok choy → salmon → a dollop of miso butter on top."
     ],
     notes: [
-      "GF label-check shortlist: furikake, tamari, white miso, mirin.",
-      "Miso butter and ponzu can be made up to a day ahead.",
-      "For meal prep: crust raw salmon up to 24 hrs ahead, or freeze for up to 1 month.",
-      "Macros: the miso butter (60g butter) + the salmon's own fat are most of the ~51g fat/serving. Skip or halve the butter to cut ~55–110 cal/serving."
+      "Lighter rebuild: quinoa-only (no rice), ponzu cut, miso butter and the mayo coating both halved. ~815 cal/serving vs ~960 for the original.",
+      "Cooking oil is the easiest further lever — skin-on salmon renders its own fat, so a nonstick pan + 1 tsp shaves ~30 cal/serving.",
+      "Any green works in place of the bok choy — it's a big pile of veg by design.",
+      "Miso butter can be made up to a day ahead.",
+      "Meal prep: crust raw salmon up to 24 hrs ahead, or freeze for up to 1 month.",
+      "GF label-check shortlist: furikake, tamari, white miso."
     ]
   },
 
