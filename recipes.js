@@ -438,7 +438,7 @@ var RECIPES = [
 
   {
     id: "raspberry-protein-chia-pudding",
-    title: "Raspberry Protein Chia Pudding",
+    title: "Protein Chia Pudding",
     emoji: "🍓",
     tags: ["Gluten-free", "Meal prep"],
     time: "~5 min + chill",
@@ -448,25 +448,26 @@ var RECIPES = [
         name: "",
         items: [
           { qty: 2, unit: "tbsp", name: "chia seeds", note: "24g", m: [120, 4, 8, 10] },
-          { qty: 0.5, unit: "cup", name: "fat-free milk (or milk of choice)", note: "120ml", m: [41, 4, 0, 6] },
-          { qty: 0.25, unit: "tsp", name: "vanilla", m: [3, 0, 0, 0] },
-          { qty: 0.5, unit: "tbsp", name: "maple syrup", note: "sugar-free, or sweetener of choice", m: [5, 0, 0, 1] },
+          { qty: 0.5, unit: "cup", name: "protein fat-free milk", note: "10g protein / 65 cal per ½ cup", m: [65, 10, 0, 7] },
+          { qty: 1, unit: "", name: "scoop chocolate protein powder", m: [120, 24, 1, 3] },
           { qty: 0.5, unit: "cup", name: "non-fat plain Greek yogurt", note: "113g", m: [67, 12, 0, 4] },
-          { qty: 0.5, unit: "cup", name: "frozen raspberries", note: "70g, or fresh", m: [36, 1, 0, 8] },
-          { qty: 0.5, unit: "", name: "scoop vanilla protein powder", note: "15g", m: [60, 13, 1, 1] }
+          { qty: 0.75, unit: "cup", name: "puréed fruit", note: "strawberries, raspberries, blueberries — whatever's around", m: [40, 1, 0, 10] },
+          { qty: null, unit: "", name: "fresh fruit on top", note: "~15 blueberries + 4 strawberries", m: [30, 1, 0, 7] },
+          { qty: null, unit: "", name: "granola", note: "optional — sometimes; ~120 cal per ¼ cup, not counted below" }
         ]
       }
     ],
     method: [
-      "Add the chia seeds, milk, vanilla, and sweetener to a small jar with a lid and stir until combined. Let it sit 5 min so the chia starts to gel.",
-      "Stir again to break up any clumps, then add the yogurt, raspberries, and protein powder; stir until combined.",
-      "Cover and refrigerate overnight, or a minimum of 2 hours.",
-      "Eat as is, or top with more raspberries, peanut butter, granola — whatever you love."
+      "Purée the fruit.",
+      "Stir the chia seeds, milk, and protein powder together in a jar until smooth. Let it sit 5 min so the chia starts to gel.",
+      "Stir again to break up clumps, then mix in the yogurt and puréed fruit.",
+      "Cover and refrigerate overnight, or a minimum of 2 hours. Top with fresh fruit (and granola if you're feeling it)."
     ],
     notes: [
-      "Per serving (makes 1): ~330 cal, 35g protein, 29g carb, 9g fat, 13g fiber.",
-      "13g fiber is high and great for satiety — pair it with water.",
-      "GF label-check: protein powder and any granola topping (the chia, yogurt, and berries are naturally GF)."
+      "Per serving (makes 1): ~440 cal, 52g protein, 9g fat, ~41g carb, ~12g fiber — proyo-tier protein efficiency (1:8.5).",
+      "No sweetener needed — the puréed fruit + chocolate protein carry it.",
+      "Granola adds ~120 cal / ¼ cup (or ~245 / ½ cup) on top of the counted total.",
+      "GF label-check: protein powder and any granola topping (the chia, yogurt, milk, and fruit are naturally GF)."
     ]
   },
 
