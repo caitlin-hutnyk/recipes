@@ -689,5 +689,64 @@ var RECIPES = [
       "Kit check: instant-read thermometer (non-negotiable), mandoline + cut glove, 5–6 small jars (125–180ml).",
       "Macros: not yet broken down — this is a dinner-party menu, not a tracked staple. Ask if you want per-dish numbers added."
     ]
+  },
+
+  {
+    id: "spicy-tuna-onigiri",
+    title: "Spicy Tuna Onigiri",
+    emoji: "🍙",
+    tags: ["Gluten-free", "Meal prep"],
+    untested: true,
+    time: "~20 min",
+    servings: 3,
+    scaleKey: { name: "tuna", label: "cans", baseQty: 1 },
+    groups: [
+      {
+        name: "Spicy tuna filling",
+        items: [
+          { qty: 1, unit: "", name: "can tuna, drained", note: "~120g drained", m: [140, 30, 1, 0] },
+          { qty: 2, unit: "tbsp", name: "mayonnaise", m: [190, 0, 21, 1] },
+          { qty: 1.5, unit: "tbsp", name: "sriracha", m: [23, 0, 0, 5] },
+          { qty: null, unit: "", name: "black pepper", note: "to taste" }
+        ]
+      },
+      {
+        name: "Rice",
+        items: [
+          { qty: 200, unit: "g", name: "sushi or short-grain rice, rinsed", note: "raw weight", m: [730, 14, 1, 160] },
+          { qty: 1, unit: "tbsp", name: "sesame oil", m: [120, 0, 14, 0] },
+          { qty: 0.5, unit: "tbsp", name: "toasted sesame seeds", m: [26, 1, 2, 1] }
+        ]
+      },
+      {
+        name: "Glaze (optional — for pan-searing)",
+        items: [
+          { qty: 2, unit: "tbsp", name: "tamari (GF soy)", m: [16, 2, 0, 2] },
+          { qty: 1, unit: "tbsp", name: "white sugar", m: [48, 0, 0, 12] },
+          { qty: 1, unit: "tsp", name: "neutral oil, for the pan", m: [40, 0, 4.5, 0] }
+        ]
+      },
+      {
+        name: "To assemble",
+        items: [
+          { qty: 3, unit: "", name: "sheets nori", note: "1 per onigiri", m: [8, 1, 0, 1] }
+        ]
+      }
+    ],
+    method: [
+      "Cook the rice.",
+      "Drain the tuna and add it to a bowl. Mix in the mayo, sriracha, and pepper.",
+      "Drizzle the sesame oil over the cooked rice and sprinkle in the sesame seeds; mix through.",
+      "Wet your hands (or wear food gloves) and shape: a layer of rice, the tuna mixture in the middle, more rice to cover, then mold into a triangle.",
+      "Optional glaze: mix the tamari and sugar. Brush it over the shaped onigiri and sear in a lightly oiled pan, ~1–2 min per side, until glazed and a little crisp (yaki-onigiri style).",
+      "Wrap in nori just before eating."
+    ],
+    notes: [
+      "The tamari-sugar mix is a yaki onigiri glaze (pan-seared, brushed with a sweet-savory sauce) — that's the best read of it. Skip step 5 for plain unfried onigiri instead; saves ~30 cal/piece and a pan.",
+      "Sodium is high for a single piece (~44% DV) — fine for hiking (a little extra salt pre-sweat is good), just don't stack it with other salty trail snacks the same day.",
+      "Meal prep / hiking: mayo + rice + tuna is a moist filling — keeps 3–4 days refrigerated. If packing for a hike, use ones made within the last 2 days, carry in a cold pouch, and eat earlier in the hike rather than late in a warm pack.",
+      "Wrap the nori on just before eating — pre-wrapped, it goes chewy against the moist rice.",
+      "GF label-check: sriracha (most brands, e.g. Huy Fong, are GF) and tamari."
+    ]
   }
 ];
