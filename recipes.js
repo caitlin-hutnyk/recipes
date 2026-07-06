@@ -713,7 +713,7 @@ var RECIPES = [
       {
         name: "Rice",
         items: [
-          { qty: 200, unit: "g", name: "sushi or short-grain rice, rinsed", note: "raw weight", m: [730, 14, 1, 160] },
+          { qty: 1, unit: "cup", name: "sushi or short-grain rice, rinsed", note: "≈200g raw weight", m: [730, 14, 1, 160] },
           { qty: 1, unit: "tbsp", name: "sesame oil", m: [120, 0, 14, 0] },
           { qty: 0.5, unit: "tbsp", name: "toasted sesame seeds", m: [26, 1, 2, 1] }
         ]
