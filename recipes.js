@@ -470,6 +470,47 @@ var RECIPES = [
   },
 
   {
+    id: "camp-protein-chia",
+    title: "Camp Cold-Soak Protein Chia",
+    emoji: "⛺",
+    tags: ["Gluten-free", "Backcountry"],
+    time: "~5 min + soak overnight",
+    servings: 1,
+    groups: [
+      {
+        name: "",
+        items: [
+          { qty: 3, unit: "tbsp", name: "chia seeds", note: "~36g", m: [180, 6, 12, 15] },
+          { qty: 0.25, unit: "cup", name: "milk powder", note: "~30g; makes ~1 cup milk — skim or whole", m: [110, 11, 0, 16] },
+          { qty: 1, unit: "", name: "scoop protein powder", note: "strawberry or vanilla pairs best", m: [120, 24, 1, 3] },
+          { qty: 0.33, unit: "cup", name: "freeze-dried strawberries", note: "they rehydrate in the soak", m: [35, 1, 0, 8] },
+          { qty: 0.25, unit: "tsp", name: "cinnamon", note: "optional but good" },
+          { qty: null, unit: "", name: "salt", note: "a pinch — the difference between flat and good, don't skip it" },
+          { qty: null, unit: "", name: "sugar or a honey packet", note: "only if your protein powder isn't already sweet", m: [16, 0, 0, 4] },
+          { qty: 1, unit: "cup", name: "water", note: "added at camp — ~1 cup to 3 tbsp chia; more for looser" },
+          { qty: 0.25, unit: "cup", name: "granola", note: "add in the morning so it stays crunchy — ~120 cal/¼ cup, not counted below" }
+        ]
+      }
+    ],
+    method: [
+      "At home: combine everything except the water and granola in a labelled sandwich bag — one bag per morning. Keep the granola in its own little bag.",
+      "At camp, the night before: tip the dry mix into a wide-mouth plastic jar, add ~1 cup water, screw the lid on tight, and shake hard.",
+      "Shake again after 5 min to break up the chia clumps.",
+      "Let it soak overnight in your bear canister — a sealed jar means no spill, and it's already stored away from the tent where it belongs.",
+      "Morning: stir, add a splash more water if it's too thick, top with granola, eat."
+    ],
+    notes: [
+      "Backcountry no-cook riff on the Protein Chia Pudding — powdered milk instead of yogurt + fresh milk, freeze-dried fruit instead of purée. No stove, no fridge.",
+      "Per serving (before granola): ~460 cal, 42g protein, 13g fat, ~46g carb — ~1:11 protein-per-cal. Granola on top adds ~120 cal/¼ cup.",
+      "Ratio: ~3 tbsp chia : ~1 cup water gels thick enough to spoon, not cement. Loosen with more water in the morning if you want.",
+      "Whole milk powder = creamier + ~40 more cal for a big day; skim keeps it lean (counted as skim here).",
+      "Sweetener: a flavoured/sweet protein powder carries it, and the strawberries help — only add sugar if it's unflavoured.",
+      "Jar: wide-mouth plastic — a saved Talenti jar is perfect (screw-top, leakproof, light). Skip glass; it's heavy and shatters in a pack.",
+      "GF label-check: protein powder and especially the granola — granola's a classic gluten trap (oats + barley malt). Chia, milk powder, and freeze-dried fruit are naturally GF."
+    ]
+  },
+
+  {
     id: "spicy-tuna-onigiri",
     title: "Spicy Tuna Onigiri",
     emoji: "🍙",
