@@ -585,6 +585,7 @@ var RECIPES = [
           { qty: 2, unit: "", name: "chicken thighs or breasts, bone-in or boneless", note: "about 1 lb / 450g", m: [545, 90, 18, 0] },
           { qty: 1, unit: "", name: "piece of ginger, sliced into coins", note: "2-inch", m: [5, 0, 0, 1] },
           { qty: 1.5, unit: "cup", name: "frozen mixed veggies", note: "peas, carrots, corn, green beans all work", m: [145, 7, 1, 27] },
+          { qty: 4, unit: "", name: "eggs", note: "beaten with a small pinch of salt, for the ribbons", m: [288, 24, 20, 2] },
           { qty: 1, unit: "tsp", name: "salt", note: "plus more to taste" }
         ]
       },
@@ -605,13 +606,15 @@ var RECIPES = [
       "Add the whole chicken pieces. Partially cover and simmer 40–50 min, stirring every 10 min or so so the rice doesn't stick to the bottom.",
       "When the rice has broken down and the congee is thick and creamy, pull out the chicken and shred it with two forks. Return it to the pot.",
       "Stir in the frozen veggies (no need to thaw) and cook 5 min until hot.",
-      "Taste and adjust the salt. If it's too thick, loosen with a splash of hot water. Ladle into bowls and top with green onions, a few drops of sesame oil, white pepper, and tamari or chili crisp."
+      "Egg ribbons: loosen the congee with a splash of hot water if it's very thick, and keep it at a gentle simmer, not a boil. Stir the pot in one slow circle, stop, then pour the beaten egg in a thin stream as it swirls. Leave it alone 20–30 sec to set, then fold through gently once or twice. Turn off the heat.",
+      "Taste and adjust the salt. Ladle into bowls and top with green onions, a few drops of sesame oil, white pepper, and tamari or chili crisp."
     ],
     notes: [
       "Raw vs rotisserie: raw chicken (this method) simmers in the pot, so the broth ends up richer and the meat silky. Bone-in thighs give the best flavor and stay moist. Rotisserie gets you ~90% of the flavor in about half the time — the easy weeknight call.",
       "Rotisserie version (25–30 min total): simmer the rice, water, ginger, and salt on their own until creamy, 25–30 min. Stir in ~2 cups shredded meat with the frozen veggies for the last 5 min.",
       "With rotisserie, don't add the meat early — already-cooked chicken turns stringy and dry if it simmers for long. Go light on the salt at the start since it's already seasoned, and adjust at the end.",
       "If you have the rotisserie carcass or bones, toss them in with the rice. They add a lot of flavor and make up for not simmering raw chicken in there.",
+      "Egg ribbons come out as soft streaks rather than egg-drop-soup wisps, since congee is thicker than broth. Stirring too soon turns them cloudy. They firm up a little in leftovers but reheat fine.",
       "For a thicker, silkier texture, freeze the rinsed rice for an hour beforehand, or just simmer a little longer.",
       "Rice-to-water ratio is flexible: 1:8 is a classic loose congee, 1:6 is thicker.",
       "It thickens as it sits, so add water when reheating leftovers.",
