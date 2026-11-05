@@ -566,5 +566,58 @@ var RECIPES = [
       "Wrap the nori on just before eating — pre-wrapped, it goes chewy against the moist rice.",
       "GF label-check: sriracha (most brands, e.g. Huy Fong, are GF) and tamari."
     ]
+  },
+
+  {
+    id: "chicken-veggie-congee",
+    title: "Chicken & Veggie Congee",
+    emoji: "🥣",
+    tags: ["Gluten-free", "One pot"],
+    time: "~1 hr",
+    servings: 4,
+    scaleKey: { name: "chicken", label: "g", baseQty: 450 },
+    groups: [
+      {
+        name: "Congee",
+        items: [
+          { qty: 1, unit: "cup", name: "jasmine rice, rinsed", m: [675, 13, 1, 149] },
+          { qty: 8, unit: "cup", name: "water or low-sodium chicken broth" },
+          { qty: 2, unit: "", name: "chicken thighs or breasts, bone-in or boneless", note: "about 1 lb / 450g", m: [545, 90, 18, 0] },
+          { qty: 1, unit: "", name: "piece of ginger, sliced into coins", note: "2-inch", m: [5, 0, 0, 1] },
+          { qty: 1.5, unit: "cup", name: "frozen mixed veggies", note: "peas, carrots, corn, green beans all work", m: [145, 7, 1, 27] },
+          { qty: 1, unit: "tsp", name: "salt", note: "plus more to taste" }
+        ]
+      },
+      {
+        name: "Toppings — per bowl",
+        fixed: true,
+        items: [
+          { qty: null, unit: "", name: "green onions", m: [5, 0, 0, 1] },
+          { qty: null, unit: "", name: "tamari", note: "or soy sauce if you don't need it gluten-free", m: [7, 1, 0, 1] },
+          { qty: null, unit: "", name: "sesame oil", note: "a few drops", m: [20, 0, 2, 0] },
+          { qty: null, unit: "", name: "white pepper" },
+          { qty: null, unit: "", name: "chili crisp", note: "a drizzle", m: [40, 0, 4, 1] }
+        ]
+      }
+    ],
+    method: [
+      "Combine the rice, water or broth, ginger, and salt in a large pot. Bring to a boil, then reduce to a low simmer.",
+      "Add the whole chicken pieces. Partially cover and simmer 40–50 min, stirring every 10 min or so so the rice doesn't stick to the bottom.",
+      "When the rice has broken down and the congee is thick and creamy, pull out the chicken and shred it with two forks. Return it to the pot.",
+      "Stir in the frozen veggies (no need to thaw) and cook 5 min until hot.",
+      "Taste and adjust the salt. If it's too thick, loosen with a splash of hot water. Ladle into bowls and top with green onions, a few drops of sesame oil, white pepper, and tamari or chili crisp."
+    ],
+    notes: [
+      "Raw vs rotisserie: raw chicken (this method) simmers in the pot, so the broth ends up richer and the meat silky. Bone-in thighs give the best flavor and stay moist. Rotisserie gets you ~90% of the flavor in about half the time — the easy weeknight call.",
+      "Rotisserie version (25–30 min total): simmer the rice, water, ginger, and salt on their own until creamy, 25–30 min. Stir in ~2 cups shredded meat with the frozen veggies for the last 5 min.",
+      "With rotisserie, don't add the meat early — already-cooked chicken turns stringy and dry if it simmers for long. Go light on the salt at the start since it's already seasoned, and adjust at the end.",
+      "If you have the rotisserie carcass or bones, toss them in with the rice. They add a lot of flavor and make up for not simmering raw chicken in there.",
+      "For a thicker, silkier texture, freeze the rinsed rice for an hour beforehand, or just simmer a little longer.",
+      "Rice-to-water ratio is flexible: 1:8 is a classic loose congee, 1:6 is thicker.",
+      "It thickens as it sits, so add water when reheating leftovers.",
+      "Instant Pot cuts it down to about 25 min on high pressure with a natural release.",
+      "Nutrition assumes boneless skinless chicken and water; broth adds a little.",
+      "GF label-check: broth, tamari, chili crisp."
+    ]
   }
 ];
